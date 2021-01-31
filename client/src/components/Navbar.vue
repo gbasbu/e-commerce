@@ -4,26 +4,33 @@
             <router-link to="/">Menu</router-link>
         </h1>
         <ul>
-            <li>
+            <li v-if="!isLoggedIn">
                 <router-link to="/login">Login</router-link>
             </li>
-            <li>
+            <li v-if="!isLoggedIn">
                 <router-link to="/register">Register</router-link>
             </li>
-            <li>
+            <li v-if="isLoggedIn">
                 <router-link to="/profile">Profile</router-link>
             </li>
-            <li>
+            <li v-if="isLoggedIn">
                 <router-link to="/">Logout</router-link>
             </li>
         </ul>
     </nav>
 </template>
+
+
 <script>
+import { mapGetters } from 'vuex';
 export default {
-    
+  computed: {
+    ...mapGetters(["isLoggedIn"])
+  }
 }
 </script>
+
+
 <style lang="scss">
     nav{
         display: flex;
