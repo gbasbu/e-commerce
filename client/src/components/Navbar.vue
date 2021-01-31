@@ -4,6 +4,9 @@
             <router-link to="/">Menu</router-link>
         </h1>
         <ul>
+            <li>
+                <router-link to="/">Home</router-link>
+            </li>
             <li v-if="!isLoggedIn">
                 <router-link to="/login">Login</router-link>
             </li>

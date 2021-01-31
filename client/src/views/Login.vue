@@ -1,4 +1,6 @@
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     
     data(){
@@ -6,7 +8,23 @@ export default {
         email: "",
         password: ""
       };
-    }
+    },
+    methods: {
+        ...mapActions(['login']),
+        loginUser(){
+            let user = {
+                email: this.email,
+                password: this.password
+            };
+            this.login(user).then(res => {
+                if(res.data.success){
+                    this.$router.push('/profile');
+                }
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+    },
 }
 </script>
 
@@ -16,12 +34,12 @@ export default {
     <main>
       <h1>Login Page</h1>
       <div>
-        <form>
+        <form @submit.prevent="loginUser">
           <label for="email">E-mail</label>
           <input type="email" id="email" name="email" v-model="email" placeholder="Enter Your E-mail">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" v-model="password" placeholder="Enter Your Password">
-          <button>Login</button>
+          <input class="submit" type="submit" value="Login">
           <router-link to="/register">Need an account?</router-link>
         </form>
       </div>
@@ -50,9 +68,8 @@ export default {
       input{
         display: block;
       }
-      button{
-        margin-top: 20px;
-        margin-right: 25px;
+      .submit{
+        margin: 15px 0;
       }
     }      
       
