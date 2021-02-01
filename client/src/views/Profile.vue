@@ -1,6 +1,14 @@
 <script>
+import{ mapActions, mapGetters } from 'vuex'
+
 export default {
-    name: "Profile"
+    computed: mapGetters(['user']),
+    methods: {
+      ...mapActions(['getProfile'])
+    },
+    created() {
+      this.getProfile();
+    },
 }
 </script>
 
@@ -8,6 +16,16 @@ export default {
 <template>
     <main>
         <h1>Profile Page</h1>
+        <div>
+          <ul>
+            <li>
+              <h3>Name: {{ this.user.firstName }} {{ this.user.lastName }} </h3>
+            </li>
+            <li>
+              <h3>Email: {{ this.user.email }}</h3>
+            </li>
+          </ul>
+        </div>
     </main>
 </template>
 
@@ -21,6 +39,12 @@ export default {
     }
     @media (min-width:1024px) {
       padding: 0 80px;
+    }
+    div{
+      margin-top: 50px;
+      ul{
+        list-style: none;
+      }
     }
   }
 </style>
