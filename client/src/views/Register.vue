@@ -1,4 +1,5 @@
 <script>
+import { mapActions } from 'vuex'
 export default {
 
   data(){
@@ -7,9 +8,26 @@ export default {
         lastName: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirm_password: ""
       };
-    }
+    },
+    methods: {
+      ...mapActions(['register']),
+      registerUser(){
+        let user = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password,
+          confirm_password: this.confirm_password
+        };
+        this.register(user).then(res => {
+          if(res.data.success){
+            this.$router.push('/login');
+          }
+        })
+      }
+    },
 }
 </script>
 
@@ -18,7 +36,7 @@ export default {
     <main>
         <h1>Register Page</h1>
         <div>
-        <form>
+        <form @submit.prevent="registerUser">
           <label for="firstName">First Name</label>
           <input type="text" name="firstName" v-model="firstName" placeholder="Enter Your Name">
           <label for="lastName">Last Name</label>
@@ -27,9 +45,9 @@ export default {
           <input type="email" id="email" name="email" v-model="email" placeholder="Enter Your E-mail">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" v-model="password" placeholder="Enter Your Password">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" v-model="confirmPassword" placeholder="Enter Your Password Again">
-          <button>Register</button>
+          <label for="confirm_password">Confirm Password</label>
+          <input type="password" id="confirm_password" name="confirm_password" v-model="confirm_password" placeholder="Enter Your Password Again">
+          <input type="submit" class="submit" value="Register">
           <router-link to="/login">Already have an account?</router-link>
         </form>
       </div>
@@ -59,9 +77,8 @@ export default {
       input{
         display: block;
       }
-      button{
-        margin-top: 20px;
-        margin-right: 25px;
+      .submit{
+        margin: 15px 0;
       }
     }
   }
