@@ -1,7 +1,11 @@
 <script>
-import { mapActions } from 'vuex'
-export default {
+import { mapActions, mapGetters } from 'vuex'
+import Errors from '@/components/Errors'
 
+export default {
+  components:{
+    Errors
+  },
   data(){
       return{
         firstName: "",
@@ -10,6 +14,9 @@ export default {
         password: "",
         confirm_password: ""
       };
+    },
+    computed:{
+      ...mapGetters(['error'])
     },
     methods: {
       ...mapActions(['register']),
@@ -35,20 +42,21 @@ export default {
 <template>
     <main>
         <h1>Register Page</h1>
+        <Errors v-if="error" :msg="error" />
         <div>
         <form @submit.prevent="registerUser">
           <label for="firstName">First Name</label>
-          <input type="text" name="firstName" v-model="firstName" placeholder="Enter Your Name">
+          <input type="text" name="firstName" v-model="firstName" >
           <label for="lastName">Last Name</label>
-          <input type="text" name="lastName" v-model="lastName" placeholder="Enter Your Surname">
+          <input type="text" name="lastName" v-model="lastName" >
           <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" v-model="email" placeholder="Enter Your E-mail">
+          <input type="email" id="email" name="email" v-model="email" >
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" v-model="password" placeholder="Enter Your Password">
+          <input type="password" id="password" name="password" v-model="password" >
           <label for="confirm_password">Confirm Password</label>
-          <input type="password" id="confirm_password" name="confirm_password" v-model="confirm_password" placeholder="Enter Your Password Again">
+          <input type="password" id="confirm_password" name="confirm_password" v-model="confirm_password" >
           <input type="submit" class="submit" value="Register">
-          <router-link to="/login">Already have an account?</router-link>
+          <router-link class="login link" to="/login">Already have an account?</router-link>
         </form>
       </div>
     </main>
@@ -57,29 +65,44 @@ export default {
 
 <style lang="scss" scoped>
   main{
-    padding: 0 20px;
-    
-    @media (min-width:768px) {
-    padding: 0 40px;
+    min-height: 100vh;
+    h1{
+      margin: 30px 0;
+      text-align: center;
     }
-    @media (min-width:1024px) {
-      padding: 0 80px;
+    label,input{
+      display: block;
     }
-
-    div{
-      display: flex;
-      justify-content: center;
+    input[type="submit"], .create{
+      cursor: pointer;
+    }
+    input{
       width: 100%;
-      label{
-        display:block;
-        margin-top: 10px;
-      }
-      input{
-        display: block;
-      }
-      .submit{
-        margin: 15px 0;
-      }
+      border: none;
+      border-bottom: 2px solid black;
+      margin-bottom: 30px;
+      padding: 10px 20px;
+    }
+    input[type="submit"]{
+      width: 100%;
+      background-color: black;
+      color: white;
+      border:none;
+      padding: 15px 0;
+      border-radius: 20px;
+      margin-top: 40px;
+      font-weight: bold;
+    }
+    .login{
+      display: inline-block;
+      width: 100%;
+      background-color: white;
+      border: 2px solid black;
+      padding: 10px 0;
+      border-radius: 20px;
+      text-align: center;
+      font-weight: bold;
+      margin-top: -10px;
     }
   }
 </style>

@@ -1,29 +1,3 @@
-<template>
-    <nav>
-        <h1>
-            <router-link to="/">Menu</router-link>
-        </h1>
-        <ul>
-            <li>
-                <router-link to="/">Home</router-link>
-            </li>
-            <li v-if="!isLoggedIn">
-                <router-link to="/login">Login</router-link>
-            </li>
-            <li v-if="!isLoggedIn">
-                <router-link to="/register">Register</router-link>
-            </li>
-            <li v-if="isLoggedIn">
-                <router-link to="/profile">Profile</router-link>
-            </li>
-            <li v-if="isLoggedIn">
-                <button @click.prevent="logoutUser">Logout</button>
-            </li>
-        </ul>
-    </nav>
-</template>
-
-
 <script>
 import { mapGetters, mapActions } from 'vuex';
 export default {
@@ -39,18 +13,40 @@ export default {
 }
 </script>
 
+<template>
+    <nav>
+        <h1>
+            <router-link class="link" to="/">E-Commerce</router-link>
+        </h1>
+        <ul>
+            <li>
+                <router-link class="link" to="/profile"><i class="fas fa-user"></i></router-link>
+            </li>
+            <li v-if="isLoggedIn">
+                <router-link class="link" to="/profile"><i class="fas fa-shopping-basket"></i></router-link>
+            </li>
+            <li v-if="isLoggedIn">
+                <a href="" class="link" @click.prevent="logoutUser"><i class="fas fa-sign-out-alt"></i></a>
+            </li>
+        </ul>
+    </nav>
+</template>
 
-<style lang="scss">
+
+<style lang="scss" scoped>
     nav{
         display: flex;
+        padding: 20px 0 ;
         justify-content: space-between;
-        padding: 0 30px;
+        align-items: center;
 
         ul{
-            list-style: none;
             display: flex;
             li{
-                margin-left: 15px;
+                margin-left: 20px;
+                i{
+                    font-size: 1.5rem;
+                }
             }
         }
     }

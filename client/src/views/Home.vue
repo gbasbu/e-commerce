@@ -15,7 +15,5 @@ export default {
 
 
 <style lang="scss" scoped>
-.home{
-  padding: 0 30px;
-}
+
 </style>

@@ -1,13 +1,20 @@
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import Errors from '@/components/Errors'
 
 export default {
-    
+    components:{
+      Errors
+    },
     data(){
       return{
         email: "",
         password: ""
       };
+    },
+    
+    computed:{
+      ...mapGetters(['error'])
     },
     methods: {
         ...mapActions(['login']),
@@ -18,12 +25,13 @@ export default {
             };
             this.login(user).then(res => {
                 if(res.data.success){
-                    this.$router.push('/');
+                    this.$router.push('/profile');
                 }
             }).catch(err => {
                 console.log(err);
+                setTimeout(() => this.Errors.error = null, 2000);
             })
-        }
+        },
     },
 }
 </script>
@@ -32,15 +40,16 @@ export default {
 <template>
     
     <main>
-      <h1>Login Page</h1>
+      <h1>Login</h1>
+      <Errors v-if="error" :msg="error" />
       <div>
         <form @submit.prevent="loginUser">
           <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" v-model="email" placeholder="Enter Your E-mail">
+          <input type="email" id="email" name="email" v-model="email">
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" v-model="password" placeholder="Enter Your Password">
+          <input type="password" id="password" name="password" v-model="password">
           <input class="submit" type="submit" value="Login">
-          <router-link to="/register">Need an account?</router-link>
+          <router-link class="create link" to="/register">Create User</router-link>
         </form>
       </div>
     </main>
@@ -49,30 +58,44 @@ export default {
 
 <style lang="scss" scoped>
   main{
-    padding: 0 20px;
-
-    @media (min-width:768px) {
-    padding: 0 40px;
+    min-height: 100vh;
+    h1{
+      margin: 30px 0;
+      text-align: center;
     }
-    @media (min-width:1024px) {
-      padding: 0 80px;
+    label,input{
+      display: block;
     }
-    div{
-      display: flex;
-      justify-content: center;
+    input[type="submit"], .create{
+      cursor: pointer;
+    }
+    input[type="email"], input[type="password"]{
       width: 100%;
-      label{
-        display:block;
-        margin-top: 10px;
-      }
-      input{
-        display: block;
-      }
-      .submit{
-        margin: 15px 0;
-      }
-    }      
-      
-    
+      border: none;
+      border-bottom: 2px solid black;
+      margin-bottom: 30px;
+      padding: 10px 20px;
+    }
+    input[type="submit"]{
+      width: 100%;
+      background-color: black;
+      color: white;
+      border:none;
+      padding: 15px 0;
+      border-radius: 20px;
+      margin-top: 40px;
+      font-weight: bold;
+    }
+    .create{
+      display: inline-block;
+      width: 100%;
+      background-color: white;
+      border: 2px solid black;
+      padding: 10px 0;
+      border-radius: 20px;
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
   }
 </style>
