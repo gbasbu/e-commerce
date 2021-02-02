@@ -1,5 +1,6 @@
 <script>
 import Nav from '@/components/Navbar';
+
 export default {
   components: {
     Nav
@@ -16,5 +17,8 @@ export default {
 
 
 <style lang="scss">
-
+  @import './assets/style/style.css';
+  #app{
+    padding: 0 30px;
+  }
 </style>
