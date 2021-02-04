@@ -18,11 +18,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 require('./config/passport')(passport);
 
+
 // ENG: Require database connect & TR: Database bağlantısı 
 require('./mongo-connection');
 
 // ENG: Bring in the Users route & TR: User route getirildi
 const users = require('./routes/api/users');
+const UserModel = require('./models/User');
 app.use('/api/users', users);
 
 // ENG: Listening server & TR: Server oluşturma
