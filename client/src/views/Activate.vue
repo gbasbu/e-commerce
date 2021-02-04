@@ -9,7 +9,7 @@ export default {
     data(){
       return{
         email: "",
-        password: ""
+        emailToken: ""
       };
     },
     
@@ -17,15 +17,15 @@ export default {
       ...mapGetters(['info'])
     },
     methods: {
-        ...mapActions(['login']),
-        loginUser(){
+        ...mapActions(['activate']),
+        activateUser(){
             let user = {
                 email: this.email,
-                password: this.password
+                emailToken: this.emailToken
             };
-            this.login(user).then(res => {
+            this.activate(user).then(res => {
                 if(res.data.success){
-                    this.$router.push('/profile');
+                    setTimeout(() => window.close(),3000)
                 }
             })
         },
@@ -37,16 +37,16 @@ export default {
 <template>
     
     <main>
-      <h1>Login</h1>
+      <h1>Activation</h1>
       <Infos v-if="info" :msg="info.msg" :class="[ info.success == false ? 'info-error' : 'info-success' ]" />
       <div>
-        <form @submit.prevent="loginUser">
+        <form @submit.prevent="activateUser">
           <label for="email">E-mail</label>
           <input type="email" id="email" name="email" v-model="email">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" v-model="password">
-          <input class="submit" type="submit" value="Login">
-          <router-link class="create link" to="/register">Create User</router-link>
+          <label for="emailToken">Activation Code</label>
+          <input type="text" id="emailToken" name="emailToken" maxlength="6" v-model="emailToken">
+          <input class="submit" type="submit" value="Activate">
+          <router-link class="create link" to="/login">Back to Login</router-link>
         </form>
       </div>
     </main>
@@ -66,7 +66,7 @@ export default {
     input[type="submit"], .create{
       cursor: pointer;
     }
-    input[type="email"], input[type="password"]{
+    input[type="email"], input[type="text"]{
       width: 100%;
       border: none;
       border-bottom: 2px solid black;

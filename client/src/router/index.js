@@ -28,6 +28,14 @@ const routes = [
     }
   },
   {
+    path: '/activation',
+    name: 'Activate',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Activate.vue'),
+    meta:{
+      requiresGuest: true
+    }
+  },
+  {
     path: '/profile',
     name: 'Profile',
     component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue'),

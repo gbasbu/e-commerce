@@ -43,6 +43,19 @@ export const mutations = {
         state.info = err.response.data
         setTimeout(() => state.info = null, 3000);
     },
+    activate_request(state){
+        state.status = 'loading'
+        state.info = null
+    },
+    activate_success(state, err){
+        state.status = 'success'
+        state.info = err
+        setTimeout(() => state.info = null, 3000);
+    },
+    activate_info(state, err) {
+        state.info = err.response.data
+        setTimeout(() => state.info = null, 3000);
+    },
     logout(state){
         state.status = ''
         state.token = ''
@@ -89,6 +102,19 @@ export const actions = {
         return res;
         } catch (err) {
             commit('register_info', err)
+        }
+    },
+    // Activation Action
+    async activate({ commit }, userData){
+        try{
+            commit('activate_request')
+            let res = await axios.post('http://localhost:5000/api/users/verify-email', userData)
+            if(res.data.success !== undefined){
+                commit('activate_success', res.data)
+            }
+            return res
+        }catch(err){
+            commit('activate_info', err)
         }
     },
     // Get Profile

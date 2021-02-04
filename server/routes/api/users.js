@@ -16,7 +16,7 @@ sgMail.setApiKey('SG.73uqjQQ4SYyJeYBCjtPDKA.jpL8rImYZqX51AqNyCYNDNjL0KSuLmcCpmIv
 */
 router.post('/register', async (req, res) => {
     let { firstName, lastName, email, password, confirm_password } = req.body
-    let emailToken = crypto.randomBytes(64).toString('hex')
+    let emailToken = Math.floor(Math.random() * (999999 - 100000) + 100000)
     let isVerified = false
     // ENG: Password check & TR: Parola sorgusu
     if( password !== confirm_password ){
@@ -60,13 +60,15 @@ router.post('/register', async (req, res) => {
         text: `
         Hello, thanks for registering on my project.
         Please copy and paste the address below to verify your account.
-        http://localhost:5000/api/users/verify-email?token=${newUser.emailToken}
+        link: http://localhost:8080/activation
+        Code: ${newUser.emailToken}
         `,
         html: `
         <h2>Hello,</h2>
         <p>Thanks for registering on my project.</p>
         <p>Please copy and paste the address below to verify your account.</p>
-        <a href="http://localhost:5000/api/users/verify-email?token=${newUser.emailToken}">Verify links here</a>
+        <a href="http://localhost:8080/activation"><strong>Activation Link</strong></a>
+        <p><strong>Activation Code: </strong>${newUser.emailToken}</p>
         `
     }
     // ENG: Send mail & TR: Mail gönderme
@@ -83,16 +85,27 @@ router.post('/register', async (req, res) => {
  * @access Public
 */
 
-router.get('/verify-email', async (req, res, next) => {
+router.post('/verify-email', async (req, res) => {
     try{
-        const user = await UserModel.findOne({ emailToken: req.query.token })
+        const user = await UserModel.findOne({ email: req.body.email })
         if(!user){
-            res.redirect('http://localhost:8080/login')
+            return res.status(400).json({
+                success: false,
+                msg: 'User is not found.'
+            })
+        }else if (user.emailToken == null){
+            return res.status(400).json({
+                success: false,
+                msg: 'Already activated your account.'
+            })
         }
         user.emailToken = null
         user.isVerified = true
-        await user.save().then(() => {
-            res.redirect('http://localhost:8080/login')
+        user.save().then(() => {
+            return res.status(201).json({
+                success: true,
+                msg: 'Successfully activated.'
+            })
         })
     }catch(err){
         console.log(`Verify Error: ${err}`);

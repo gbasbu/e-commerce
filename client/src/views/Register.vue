@@ -56,7 +56,7 @@ export default {
           <label for="confirm_password">Confirm Password</label>
           <input type="password" id="confirm_password" name="confirm_password" v-model="confirm_password" >
           <input type="submit" class="submit" value="Register">
-          <router-link class="login link" to="/login">Already have an account?</router-link>
+          <router-link class="login link" to="/login">Back to Login</router-link>
         </form>
       </div>
     </main>
