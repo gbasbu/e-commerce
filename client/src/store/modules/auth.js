@@ -4,49 +4,50 @@ import router from '../../router'
 export const state = {
     token: localStorage.getItem('token') || '',
     user: {},
-    statıs: '',
-    error: null
+    status: '',
+    info: null
 };
 
 export const getters = {
     isLoggedIn: state => !!state.token,
     authState: state => state.status,
     user: state => state.user,
-    error: state => state.error
+    info: state => state.info
 };
 
 export const mutations = {
     auth_request(state){
         state.status = 'loading'
-        state.error = null
+        state.info = null
     },
     auth_success(state, token, user){
         state.token = token,
         state.user = user,
         state.status = 'success'
-        state.error = null
+        state.info = null
     },
-    auth_error(state, err){
-        state.error = err.response.data.msg
-        setTimeout(() => state.error = null, 3000);
+    auth_info(state, err){
+        state.info = err.response.data
+        setTimeout(() => state.info = null, 3000);
     },
     register_request(state){
         state.status = 'loading'
-        state.errorr = null
+        state.info = null
     },
-    register_success(state){
+    register_success(state, err){
         state.status = 'success'
-        state.errorr = null
+        state.info = err
+        setTimeout(() => state.info = null, 3000);
     },
-    register_error(state, err) {
-        state.error = err.response.data.msg
-        setTimeout(() => state.error = null, 3000);
+    register_info(state, err) {
+        state.info = err.response.data
+        setTimeout(() => state.info = null, 3000);
     },
     logout(state){
         state.status = ''
         state.token = ''
         state.user = ''
-        state.error = null
+        state.info = null
     },
     profile_request(state){
         state.status = 'loading'
@@ -74,7 +75,7 @@ export const actions = {
             }
             return res;
         }catch(err){
-            commit('auth_error', err)
+            commit('auth_info', err)
         }
     },
     // Register Action
@@ -83,11 +84,11 @@ export const actions = {
             commit('register_request');
             let res = await axios.post('http://localhost:5000/api/users/register', userData);
             if(res.data.success !== undefined){
-            commit('register_success');
+            commit('register_success', res.data);
         }
         return res;
         } catch (err) {
-            commit('register_error', err)
+            commit('register_info', err)
         }
     },
     // Get Profile
