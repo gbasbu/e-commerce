@@ -1,10 +1,10 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import Errors from '@/components/Errors'
+import Infos from '@/components/Infos'
 
 export default {
     components:{
-      Errors
+      Infos
     },
     data(){
       return{
@@ -14,7 +14,7 @@ export default {
     },
     
     computed:{
-      ...mapGetters(['error'])
+      ...mapGetters(['info'])
     },
     methods: {
         ...mapActions(['login']),
@@ -29,7 +29,7 @@ export default {
                 }
             }).catch(err => {
                 console.log(err);
-                setTimeout(() => this.Errors.error = null, 2000);
+                setTimeout(() => this.Infos.error = null, 2000);
             })
         },
     },
@@ -41,7 +41,7 @@ export default {
     
     <main>
       <h1>Login</h1>
-      <Errors v-if="error" :msg="error" />
+      <Infos v-if="info" :msg="info.msg" :class="[ info.success == false ? 'info-error' : 'info-success' ]" />
       <div>
         <form @submit.prevent="loginUser">
           <label for="email">E-mail</label>

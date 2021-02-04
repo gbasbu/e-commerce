@@ -1,10 +1,10 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import Errors from '@/components/Errors'
+import Infos from '@/components/Infos'
 
 export default {
   components:{
-    Errors
+    Infos
   },
   data(){
       return{
@@ -16,7 +16,7 @@ export default {
       };
     },
     computed:{
-      ...mapGetters(['error'])
+      ...mapGetters(['info'])
     },
     methods: {
       ...mapActions(['register']),
@@ -42,7 +42,7 @@ export default {
 <template>
     <main>
         <h1>Register Page</h1>
-        <Errors v-if="error" :msg="error" />
+        <Infos v-if="info" :msg="info.msg" :class="[ info.success == false ? 'info-error' : 'info-success' ]" />
         <div>
         <form @submit.prevent="registerUser">
           <label for="firstName">First Name</label>
