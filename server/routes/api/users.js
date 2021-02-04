@@ -1,28 +1,23 @@
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const UserModel = require('../../models/User');
-const key = require('../../config/keys').tokenKey;
+const express = require('express')
+const router = express.Router()
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const passport = require('passport')
+const UserModel = require('../../models/User')
+const key = require('../../config/keys').tokenKey
 
 /**
  * @route POST /users/register
  * @desc Register the User
  * @access Public
 */
-router.post('/register', (req, res) => {
-    let {
-        firstName,
-        lastName,
-        email,
-        password,
-        confirm_password
-    } = req.body
+router.post('/register', async (req, res) => {
+    let { firstName, lastName, email, password, confirm_password } = req.body
     if( password !== confirm_password ){
         return res.status(400).json({
-            msg: "Password do not match."
-        });
+            msg: "Password do not match.",
+            success: false
+        })
     }
     // ENG: Check for the unique Email & TR: Email kayıt kontrolü
     UserModel.findOne({ 
@@ -30,32 +25,27 @@ router.post('/register', (req, res) => {
     }).then(user => {
         if(user) {
             return res.status(400).json({
-                msg: "Email is already registred. Did you forgot your password?"
-            });
+                msg: "Email is already registred. Did you forgot your password?",
+                success: false
+            })
         }
-    });
+    })
     // ENG: The data is valid and we can register the new user & TR: Data geçerli yeni kullanıcı oluşturulacak
-    let newUser = new UserModel({
-        firstName,
-        lastName,
-        email,
-        password
-    });
+    let newUser = new UserModel({ firstName, lastName, email, password })
     // ENG: Hash the password & TR: Password şifreleme
-    bcrypt.genSalt(10, (err, salt) => {
+    await bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if(err) throw err;
+            if(err) throw err
             newUser.password = hash
             newUser.save().then(user => {
                 return res.status(201).json({
                     success: true,
-                    msg: "User is registered."
-                });
-            });
-        });
-    });
-
-});
+                    msg: "User is registered.Check your mail and activate your account please."
+                })
+            })
+        })
+    })
+})
 
 /**
  * @route POST /users/login
@@ -70,7 +60,7 @@ router.post('/login', (req, res) => {
             return res.status(404).json({
                 msg: "User is not found.",
                 success: false
-            });
+            })
         }
         // ENG: If there is user we are now going to compare the password & TR: Eğer email kayıtlı ise password şifreleri kontrol edilecek
         bcrypt.compare(req.body.password, user.password).then(isMatch => {
@@ -89,13 +79,13 @@ router.post('/login', (req, res) => {
                         user: user,
                         token: `Bearer ${token}`,
                         msg: "You are now logged in."
-                    });
+                    })
                 })
             }else{
                 return res.status(404).json({
                     msg: "Incorrect password.",
                     success: false
-                });
+                })
             }
 
         })
@@ -112,8 +102,8 @@ router.get('/profile', passport.authenticate('jwt', {
 }),(req, res) => {
     return res.json({
         user: req.user
-    });
-});
+    })
+})
 
 
 module.exports = router
