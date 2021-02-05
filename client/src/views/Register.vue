@@ -1,10 +1,9 @@
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import Infos from '@/components/Infos'
+import { mapActions } from 'vuex'
 
 export default {
   components:{
-    Infos
+    
   },
   data(){
       return{
@@ -14,9 +13,6 @@ export default {
         password: "",
         confirm_password: ""
       };
-    },
-    computed:{
-      ...mapGetters(['info'])
     },
     methods: {
       ...mapActions(['register']),
@@ -42,7 +38,6 @@ export default {
 <template>
     <main>
         <h1>Register Page</h1>
-        <Infos v-if="info" :msg="info.msg" :class="[ info.success == false ? 'info-error' : 'info-success' ]" />
         <div>
         <form @submit.prevent="registerUser">
           <label for="firstName">First Name</label>

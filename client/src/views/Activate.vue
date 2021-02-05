@@ -1,20 +1,15 @@
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import Infos from '@/components/Infos'
+import { mapActions } from 'vuex'
 
 export default {
     components:{
-      Infos
+      
     },
     data(){
       return{
         email: "",
         emailToken: ""
       };
-    },
-    
-    computed:{
-      ...mapGetters(['info'])
     },
     methods: {
         ...mapActions(['activate']),
@@ -38,7 +33,6 @@ export default {
     
     <main>
       <h1>Activation</h1>
-      <Infos v-if="info" :msg="info.msg" :class="[ info.success == false ? 'info-error' : 'info-success' ]" />
       <div>
         <form @submit.prevent="activateUser">
           <label for="email">E-mail</label>
