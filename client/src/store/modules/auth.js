@@ -4,7 +4,6 @@ import router from "../../router";
 export const state = {
   token: localStorage.getItem("token") || "",
   user: {},
-  status: "",
   info: null,
 };
 
