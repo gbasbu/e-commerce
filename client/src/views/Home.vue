@@ -2,9 +2,8 @@
 // @ is an alias to /src
 
 export default {
-  name: 'Home',
-  
-}
+  name: "Home",
+};
 </script>
 
 <template>
@@ -15,5 +14,4 @@ export default {
 
 
 <style lang="scss" scoped>
-
 </style>

@@ -36,9 +36,10 @@ export default {
       <div>
         <form @submit.prevent="loginUser">
           <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" v-model="email">
+          <input type="email" id="email" name="email" v-model="email" required>
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" v-model="password">
+          <router-link to="/reset-request">Forgot Password</router-link>
+          <input type="password" id="password" name="password" v-model="password" required>
           <input class="submit" type="submit" value="Login">
           <router-link class="create link" to="/register">Create User</router-link>
         </form>

@@ -1,13 +1,13 @@
 <template>
-    <div> {{ msg }} </div>
+  <div>{{ msg }}</div>
 </template>
 <script>
 export default {
-    props: ['msg']
-}
+  props: ["msg"],
+};
 </script>
 <style lang="scss" scoped>
-    div{
-        margin-bottom: 10px ;
-    }
+div {
+  margin-bottom: 10px;
+}
 </style>

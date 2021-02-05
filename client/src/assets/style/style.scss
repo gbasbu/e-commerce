@@ -1,20 +1,20 @@
-*{
+* {
     margin: 0;
-    padding:0 ;
+    padding: 0;
     box-sizing: border-box;
-    .link{
+    .link {
         text-decoration: none;
         color: black;
     }
 
-    ul{
+    ul {
         list-style: none;
     }
-    .info-error{
+    .info-error {
         color: white;
         background-color: red;
     }
-    .info-success{
+    .info-success {
         color: white;
         background-color: green;
     }

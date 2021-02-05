@@ -6,21 +6,15 @@ export default {
   data() {
     return {
       email: "",
-      emailToken: "",
     };
   },
   methods: {
-    ...mapActions(["activate"]),
-    activateUser() {
+    ...mapActions(["resetRequest"]),
+    resetCode() {
       let user = {
         email: this.email,
-        emailToken: this.emailToken,
       };
-      this.activate(user).then((res) => {
-        if (res.data.success) {
-          setTimeout(() => window.close(), 3000);
-        }
-      });
+      this.resetRequest(user);
     },
   },
 };
@@ -29,20 +23,12 @@ export default {
 
 <template>
   <main>
-    <h1>Activation</h1>
+    <h1>Send Code</h1>
     <div>
-      <form @submit.prevent="activateUser">
+      <form @submit.prevent="resetCode">
         <label for="email">E-mail</label>
         <input type="email" id="email" name="email" v-model="email" required />
-        <label for="emailToken">Activation Code</label>
-        <input
-          type="text"
-          id="emailToken"
-          name="emailToken"
-          maxlength="6"
-          v-model="emailToken"
-        />
-        <input class="submit" type="submit" value="Activate" />
+        <input class="submit" type="submit" value="Send Code" />
         <router-link class="create link" to="/login">Back to Login</router-link>
       </form>
     </div>
@@ -66,7 +52,7 @@ main {
     cursor: pointer;
   }
   input[type="email"],
-  input[type="text"] {
+  input[type="password"] {
     width: 100%;
     border: none;
     border-bottom: 2px solid black;
