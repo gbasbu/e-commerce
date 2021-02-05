@@ -129,7 +129,7 @@ router.post('/login', (req, res) => {
         }else if (user.isVerified == false){
             return res.status(404).json({
                 msg: 'User is not activated. Please check your mail.',
-                success: true
+                success: false
             })
         }
         // ENG: If there is user we are now going to compare the password & TR: Eğer email kayıtlı ise password şifreleri kontrol edilecek
