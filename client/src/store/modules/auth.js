@@ -16,64 +16,45 @@ export const getters = {
 };
 
 export const mutations = {
-  auth_request(state) {
-    state.status = "loading";
-    state.info = null;
-  },
-  auth_success(state, token, user) {
-    (state.token = token), (state.user = user), (state.status = "success");
-    state.info = null;
+  auth_success(state, data) {
+    state.token = data.token
+    state.user = data.user
+    state.info = data
   },
   auth_info(state, err) {
     state.info = err.response.data;
     setTimeout(() => (state.info = null), 3000);
   },
-  register_request(state) {
-    state.status = "loading";
-    state.info = null;
-  },
-  register_success(state, err) {
-    state.status = err.status;
-    state.info = err;
+  register_success(state, data) {
+    state.status = data.status;
+    state.info = data;
     setTimeout(() => (state.info = null), 3000);
   },
   register_info(state, err) {
     state.info = err.response.data;
     setTimeout(() => (state.info = null), 3000);
   },
-  activate_request(state) {
-    state.status = "loading";
-    state.info = null;
-  },
-  activate_success(state, err) {
-    state.status = err.status;
-    state.info = err;
+  activate_success(state, data) {
+    state.status = data.status;
+    state.info = data;
     setTimeout(() => (state.info = null), 3000);
   },
   activate_info(state, err) {
     state.info = err.response.data;
     setTimeout(() => (state.info = null), 3000);
   },
-  reset_code_request(state) {
-    state.status = "loading";
-    state.info = null;
-  },
-  reset_code_success(state, err) {
-    state.status = err.status;
-    state.info = err;
+  reset_code_success(state, data) {
+    state.status = data.status;
+    state.info = data;
     setTimeout(() => (state.info = null), 3000);
   },
   reset_password_info(state, err) {
     state.info = err.response.data;
     setTimeout(() => (state.info = null), 3000);
   },
-  reset_password_request(state) {
-    state.status = "loading";
-    state.info = null;
-  },
-  reset_password_success(state, err) {
-    state.status = err.status;
-    state.info = err;
+  reset_password_success(state, data) {
+    state.status = data.status;
+    state.info = data;
     setTimeout(() => (state.info = null), 3000);
   },
   reset_code_info(state, err) {
@@ -86,9 +67,6 @@ export const mutations = {
     state.user = "";
     state.info = null;
   },
-  profile_request(state) {
-    state.status = "loading";
-  },
   profile_response(state, user) {
     state.user = user;
   },
@@ -97,17 +75,15 @@ export const mutations = {
 export const actions = {
   // Login Action
   async login({ commit }, user) {
-    commit("auth_request");
     try {
       let res = await axios.post("http://localhost:5000/api/users/login", user);
       if (res.data.success) {
         const token = res.data.token;
-        const user = res.data.user;
         // Store the token into the localstorge
         localStorage.setItem("token", token);
         // Set the axios defaults
         axios.defaults.headers.common["Authorization"] = token;
-        commit("auth_success", token, user);
+        commit("auth_success", res.data);
       }
       return res;
     } catch (err) {
@@ -117,12 +93,11 @@ export const actions = {
   // Register Action
   async register({ commit }, userData) {
     try {
-      commit("register_request");
       let res = await axios.post(
         "http://localhost:5000/api/users/register",
         userData
       );
-      if (res.data.success !== undefined) {
+      if (res.data.success == true) {
         commit("register_success", res.data);
       }
       return res;
@@ -133,12 +108,11 @@ export const actions = {
   // Activation Action
   async activate({ commit }, userData) {
     try {
-      commit("activate_request");
       let res = await axios.post(
         "http://localhost:5000/api/users/verify-email",
         userData
       );
-      if (res.data.success == undefined) {
+      if (res.data.success == true) {
         commit("activate_success", res.data);
       }
       return res;
@@ -149,7 +123,6 @@ export const actions = {
   // Reset Password Mail
   async resetRequest({ commit }, userData) {
     try {
-      commit("reset_code_request");
       let res = await axios.post(
         "http://localhost:5000/api/users/reset-request",
         userData
@@ -165,7 +138,6 @@ export const actions = {
   // Reset Password Action
   async resetPassword({ commit }, userData) {
     try {
-      commit("reset_password_request");
       let res = await axios.post(
         "http://localhost:5000/api/users/reset-password",
         userData
@@ -180,7 +152,6 @@ export const actions = {
   },
   // Get Profile
   async getProfile({ commit }) {
-    commit("profile_request");
     let res = await axios.get("http://localhost:5000/api/users/profile");
     commit("profile_response", res.data.user);
     return res;

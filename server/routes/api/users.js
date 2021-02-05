@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const UserModel = require("../../models/User");
 const key = require("../../config/keys").tokenKey;
-const crypto = require("crypto");
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(
   "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"
@@ -28,63 +27,61 @@ router.post("/users/register", async (req, res) => {
     });
   }
   // ENG: Check for the unique Email & TR: Email kayıt kontrolü
-  UserModel.findOne({
-    email: email,
-  }).then((user) => {
-    if (user) {
-      return res.status(400).json({
-        msg: "Email is already registred. Did you forgot your password?",
-        success: false,
-      });
-    }
-  });
-  // ENG: The data is valid and we can register the new user & TR: Data geçerli yeni kullanıcı oluşturulacak
-  let newUser = new UserModel({
-    firstName,
-    lastName,
-    email,
-    emailToken,
-    isVerified,
-    password,
-  });
-  // ENG: Hash the password & TR: Password şifreleme
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(newUser.password, salt, (err, hash) => {
-      if (err) throw err;
-      newUser.password = hash;
-      newUser.save().then((user) => {
-        return res.status(201).json({
-          success: true,
-          msg:
-            "User is registered.Check your mail and activate your account please.",
-        });
-      });
+  const user = await UserModel.findOne({ email: email })
+  if (user) {
+    return res.status(400).json({
+      msg: "Email is already registred. Did you forgot your password?",
+      success: false,
+    })
+  } else {
+    // ENG: The data is valid and we can register the new user & TR: Data geçerli yeni kullanıcı oluşturulacak
+    let newUser = new UserModel({
+      firstName,
+      lastName,
+      email,
+      emailToken,
+      isVerified,
+      password,
     });
-  });
-  // ENG: Create verify mail & TR: Aktivasyon maili oluşturma
-  const msg = {
-    from: "g.basbug@hotmail.com",
-    to: newUser.email,
-    subject: "E-commerce - verify mail",
-    text: `
-        Hello, thanks for registering on my project.
-        Please copy and paste the address below to verify your account.
-        link: http://localhost:8080/activation
-        Code: ${newUser.emailToken}
-        `,
-    html: `
-        <h2>Hello,</h2>
-        <p>Thanks for registering on my project.</p>
-        <p>Please copy and paste the address below to verify your account.</p>
-        <a href="http://localhost:8080/activation"><strong>Activation Link</strong></a>
-        <p><strong>Activation Code: </strong>${newUser.emailToken}</p>
-        `,
-  };
-  // ENG: Send mail & TR: Mail gönderme
-  try {
-    // await sgMail.send(msg)
-  } catch (err) {
-    console.log(`Mail gönderilemedi: ${err}`);
+    // ENG: Hash the password & TR: Password şifreleme
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        newUser.save().then((user) => {
+          return res.status(201).json({
+            success: true,
+            msg:
+              "User is registered.Check your mail and activate your account please.",
+          })
+        })
+      })
+    });
+    // ENG: Create verify mail & TR: Aktivasyon maili oluşturma
+    const msg = {
+      from: "g.basbug@hotmail.com",
+      to: newUser.email,
+      subject: "E-commerce - verify mail",
+      text: `
+      Hello, thanks for registering on my project.
+      Please copy and paste the address below to verify your account.
+      link: http://localhost:8080/activation
+      Code: ${newUser.emailToken}
+      `,
+      html: `
+      <h2>Hello,</h2>
+      <p>Thanks for registering on my project.</p>
+      <p>Please copy and paste the address below to verify your account.</p>
+      <a href="http://localhost:8080/activation"><strong>Activation Link</strong></a>
+      <p><strong>Activation Code: </strong>${newUser.emailToken}</p>
+      `,
+    };
+    // ENG: Send mail & TR: Mail gönderme
+    try {
+      // await sgMail.send(msg)
+    } catch (err) {
+      console.log(`Mail gönderilemedi: ${err}`);
+    }
   }
 });
 
