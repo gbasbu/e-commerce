@@ -242,7 +242,7 @@ router.post("/users/login", (req, res) => {
               success: true,
               user: user,
               token: `Bearer ${token}`,
-              msg: "You are now logged in.",
+              msg: null,
             });
           }
         );
@@ -261,12 +261,7 @@ router.post("/users/login", (req, res) => {
  * @desc Return the User's data
  * @access Private
  */
-router.get(
-  "/users/profile",
-  passport.authenticate("jwt", {
-    session: false,
-  }),
-  (req, res) => {
+router.get("/users/profile",passport.authenticate("jwt", {session: false,}),(req, res) => {
     return res.json({
       user: req.user,
     });

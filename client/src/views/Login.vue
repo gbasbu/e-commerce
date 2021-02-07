@@ -37,8 +37,10 @@ export default {
         <form @submit.prevent="loginUser">
           <label for="email">E-mail</label>
           <input type="email" id="email" name="email" v-model="email" required>
-          <label for="password">Password</label>
-          <router-link to="/reset-request">Forgot Password</router-link>
+          <div class="forgot">
+            <label for="password">Password</label>
+            <router-link to="/reset-request">Forgot Password</router-link>
+          </div>
           <input type="password" id="password" name="password" v-model="password" required>
           <input class="submit" type="submit" value="Login">
           <router-link class="create link" to="/register">Create User</router-link>
@@ -88,6 +90,10 @@ export default {
       margin-top: 20px;
       text-align: center;
       font-weight: bold;
+    }
+    .forgot{
+      display: flex;
+      justify-content: space-between;
     }
   }
 </style>

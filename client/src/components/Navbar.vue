@@ -24,7 +24,7 @@ export default {
           ><i class="fas fa-user"></i
         ></router-link>
       </li>
-      <li v-if="isLoggedIn">
+      <li>
         <router-link class="link" to="/profile"
           ><i class="fas fa-shopping-basket"></i
         ></router-link>
@@ -42,7 +42,7 @@ export default {
 <style lang="scss" scoped>
 nav {
   display: flex;
-  padding: 20px 0;
+  padding: 40px 0;
   justify-content: space-between;
   align-items: center;
 

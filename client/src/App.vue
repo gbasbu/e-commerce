@@ -9,7 +9,7 @@ export default {
     Infos
   },
   computed:{
-    ...mapGetters(['info'])
+    ...mapGetters(['userInfo', 'addressInfo'])
   }
 }
 </script>
@@ -17,14 +17,15 @@ export default {
 <template>
   <div id="app">
     <Nav/>
-    <Infos v-if="info" :msg="info.msg" :class="[ info.success == false ? 'info-error' : 'info-success' ]" />
+    <Infos v-if="userInfo" :msg="userInfo.msg" :class="[ userInfo.success == false ? 'info-error' : 'info-success' ]" />
+    <Infos v-if="addressInfo" :msg="addressInfo.msg" :class="[ addressInfo.success == false ? 'info-error' : 'info-success' ]" />
     <router-view/>
   </div>
 </template>
 
 
 <style lang="scss">
-  @import './assets/style/style.css';
+  @import './assets/style/style.scss';
   #app{
     padding: 0 30px;
   }

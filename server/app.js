@@ -23,9 +23,12 @@ require("./config/passport")(passport);
 // ENG: Require database connect & TR: Database bağlantısı
 require("./mongo-connection");
 
-// ENG: Bring in the Users route & TR: User route getirildi
-const users = require("./routes/api/users");
-app.use("/api/", users);
+// ENG: Bring in the routes & TR: Routes getirildi
+const userRouter = require("./routes/api/user")
+const addressRouter = require('./routes/api/address')
+
+app.use("/api/", userRouter)
+app.use('/api/', addressRouter)
 
 // ENG: Listening server & TR: Server oluşturma
 const PORT = process.env.PORT || 5000;
