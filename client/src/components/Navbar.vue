@@ -1,14 +1,8 @@
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters(["isLoggedIn"]),
-  },
-  methods: {
-    ...mapActions(["logout"]),
-    logoutUser() {
-      this.logout();
-    },
   },
 };
 </script>
@@ -28,11 +22,6 @@ export default {
         <router-link class="link" to="/profile"
           ><i class="fas fa-shopping-basket"></i
         ></router-link>
-      </li>
-      <li v-if="isLoggedIn">
-        <a href="" class="link" @click.prevent="logoutUser"
-          ><i class="fas fa-sign-out-alt"></i
-        ></a>
       </li>
     </ul>
   </nav>

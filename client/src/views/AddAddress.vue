@@ -25,14 +25,10 @@ export default {
         address: this.address,
         addressTitle: this.addressTitle
       };
-      this.addAddress(newAddress).then(() => {
-        this.firstName = '',
-        this.lastName = '',
-        this.telNo = '',
-        this.province = '',
-        this.county = '',
-        this.address = '',
-        this.addressTitle = ''
+      this.addAddress(newAddress).then((res) => {
+        if(res.data.success == true){
+          this.$router.push('/profile');
+        }
       })
     },
   },
