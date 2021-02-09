@@ -1,5 +1,5 @@
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import AddressCard from '@/components/Address-card'
 
 export default {
@@ -9,7 +9,12 @@ export default {
     computed: {
         ...mapGetters(['addresses']),
     },
-    
+    methods: {
+      ...mapActions(['fetchAddress', 'deleteAddress'])
+    },
+    created() {
+      this.fetchAddress()
+    },
 };
 </script>
 

@@ -21,7 +21,7 @@ export default {
 <template>
     <main>
       <h1>My Account</h1>
-      <router-link class="underline link" :to="logoutUser">Logout</router-link>
+      <a class="underline link" @click.prevent="logoutUser"></a>
       <div class="user-details">
         <h2>Account Details</h2>
         <div v-if="user">
