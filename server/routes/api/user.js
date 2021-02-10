@@ -6,7 +6,8 @@ const passport = require("passport");
 const UserModel = require("../../models/User");
 const key = require("../../config/keys").tokenKey;
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey("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");
+require('dotenv').config();
+sgMail.setApiKey(process.env.SENDGRID_API);
 
 /**
  * @route POST /users/register
@@ -76,7 +77,7 @@ router.post("/users/register", async (req, res) => {
     };
     // ENG: Send mail & TR: Mail gönderme
     try {
-      // await sgMail.send(msg)
+      await sgMail.send(msg)
     } catch (err) {
       console.log(`Mail gönderilemedi: ${err}`);
     }
