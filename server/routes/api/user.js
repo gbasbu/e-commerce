@@ -6,9 +6,7 @@ const passport = require("passport");
 const UserModel = require("../../models/User");
 const key = require("../../config/keys").tokenKey;
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(
-  "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"
-);
+sgMail.setApiKey("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");
 
 /**
  * @route POST /users/register
@@ -192,6 +190,7 @@ router.post("/users/reset-password", async (req, res) => {
     bcrypt.hash(newPassword, salt, (err, hash) => {
       if (err) throw err;
       user.password = hash;
+      user.resetToken = null
       user.save().then((user) => {
         return res.status(201).json({
           success: true,

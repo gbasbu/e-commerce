@@ -33,7 +33,16 @@ export const mutations = {
     delete_address_error(state, err){
         state.addressInfo = err.response.data
         setTimeout(() => state.addressInfo = null, 3000)
-    }
+    },
+    update_address_success(state, data){
+        state.addressInfo = data
+        setTimeout(() => state.addressInfo = null, 3000)
+    },
+    update_address_error(state, err){
+        state.addressInfo = err.response.data
+        setTimeout(() => state.addressInfo = null, 3000)
+    },
+
 }
 
 export const actions = {
@@ -62,15 +71,27 @@ export const actions = {
         }
     },
     // Delete Address Action
-    async deleteAddress({ commit }, addressID){
+    async deleteAddress({ commit }, id, addressData){
         try {
-            let res = await axios.delete(`http://localhost:5000/api/address/delete/${addressID}`)
+            let res = await axios.delete(`http://localhost:5000/api/address/delete/${id}`, addressData)
             if(res.data.success !== false){
                 commit('delete_address_success', res.data)
             }
             return res
         } catch (err) {
             commit('delete_address_error', err)
+        }
+    },
+    // Update Address Action
+    async updateAddress({ commit },addressData){
+        try {
+            let res = await axios.put(`http://localhost:5000/api/address/update/${addressData.id}`, addressData)
+            if(res.data.success !== false){
+                commit('update_address_success', res.data)
+            }
+            return res
+        } catch (err) {
+            commit('update_address_error', err)
         }
     }
 }

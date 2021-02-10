@@ -21,11 +21,11 @@ const AdressSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    address: {
+    location: {
         type: String,
         required: true
     },
-    addressTitle: {
+    title: {
         type: String,
         required: true
     },

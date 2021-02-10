@@ -9,8 +9,8 @@ export default {
       telNo: "",
       province: "",
       county: "",
-      address: '',
-      addressTitle: ''
+      location: '',
+      title: ''
     };
   },
   methods: {
@@ -22,8 +22,8 @@ export default {
         telNo: this.telNo,
         province: this.province,
         county: this.county,
-        address: this.address,
-        addressTitle: this.addressTitle
+        location: this.location,
+        title: this.title
       };
       this.addAddress(newAddress).then((res) => {
         if(res.data.success == true){
@@ -51,10 +51,10 @@ export default {
         <input type="text" id="province" name="province" v-model="province" required/>
         <label for="county">County</label>
         <input type="text" id="county" name="county" v-model="county" required/>
-        <label for="address">Address</label>
-        <input type="text" id="address" name="address" v-model="address" required/>
-        <label for="addressTitle">Address Title</label>
-        <input type="text" id="addressTitle" name="addressTitle" v-model="addressTitle" required/>
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" v-model="location" required/>
+        <label for="title">Address Title</label>
+        <input type="text" id="title" name="title" v-model="title" required/>
         <input type="submit" class="submit" value="Create Address" />
       </form>
     </div>
