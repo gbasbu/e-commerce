@@ -41,7 +41,7 @@ export default {
           </div>
           <input type="password" id="password" name="password" v-model="password" required>
           <input class="submit" type="submit" value="Login">
-          <router-link class="create link" to="/register">Create User</router-link>
+          <router-link class="create link" to="/register">Register</router-link>
         </form>
       </div>
     </main>

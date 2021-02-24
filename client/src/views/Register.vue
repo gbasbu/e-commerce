@@ -59,7 +59,6 @@ export default {
           v-model="confirm_password"
         />
         <input type="submit" class="submit" value="Register" />
-        <router-link class="login link" to="/login">Back to Login</router-link>
       </form>
     </div>
   </main>
