@@ -14,30 +14,31 @@ const passport = require("passport")
 router.post('/address/add', passport.authenticate("jwt", {session: false}), async (req, res) => {
     const userID = req.user.id
     const { firstName, lastName, telNo, province, county, location, title } = req.body
-    const newAddress = new AddressModel({
-        firstName,
-        lastName,
-        telNo,
-        province,
-        county,
-        location,
-        title,
-        userID
-    })
-    const savedAddress = await  AddressModel.findOne({ title: title })
-    if(savedAddress){
-        return res.status(400).json({
-            success: false,
-            msg: 'Address title already saved. Please change address title.'
+    try {
+        const newAddress = new AddressModel({
+            firstName,
+            lastName,
+            telNo,
+            province,
+            county,
+            location,
+            title,
+            userID
         })
-    }else{
         await newAddress.save().then(() => {
             return res.status(201).json({
                 success: true,
                 msg: 'Successfully saved new address.'
             })
         })
+    } catch (err) {
+        return res.status(400).json({
+            success: false,
+            msg: 'Something wrong.Please try again later.'
+        })
     }
+    
+        
 })
 
 /**
