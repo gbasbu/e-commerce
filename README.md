@@ -1,4 +1,4 @@
-# e-commerce
+# e-commerce-project-client
 E-commerce project used mongo, express, vue, node
 
 --The under construction--
