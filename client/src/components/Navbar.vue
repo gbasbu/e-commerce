@@ -1,30 +1,44 @@
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
+  components:{
+    
+  },
+  data() {
+    return {
+      
+    }
+  },
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["isLoggedIn",  'categories']),
+  },
+  methods: {
+    ...mapActions(['fetchCategories'])
+  },
+  created() {
+    this.fetchCategories()
   },
 };
 </script>
 
 <template>
   <nav>
-    <h1>
-      <router-link class="link" to="/">E-Commerce</router-link>
-    </h1>
-    <ul>
-      <li>
-        <router-link class="link" to="/profile"
-          ><i class="fas fa-user"></i
-        ></router-link>
-      </li>
-      <li>
-        <router-link class="link" to="/profile"
-          ><i class="fas fa-shopping-basket"></i
-        ></router-link>
-      </li>
-    </ul>
-  </nav>
+      <h1>
+        <router-link class="link" to="/">E-Commerce</router-link>
+      </h1>
+      <ul>
+        <li>
+          <router-link class="link" to="/profile"
+            ><i class="fas fa-user"></i
+          ></router-link>
+        </li>
+        <li>
+          <router-link class="link" to="/profile"
+            ><i class="fas fa-shopping-basket"></i
+          ></router-link>
+        </li>
+      </ul>
+    </nav>
 </template>
 
 
@@ -34,7 +48,7 @@ nav {
   padding: 40px 0;
   justify-content: space-between;
   align-items: center;
-
+  
   ul {
     display: flex;
     li {
@@ -44,5 +58,6 @@ nav {
       }
     }
   }
+  
 }
 </style>

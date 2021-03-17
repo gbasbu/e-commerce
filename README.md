@@ -1,7 +1,7 @@
 # e-commerce
 E-commerce project used mongo, express, vue, node
 
---The under construction--
+-- The under construction --
 
 ## Completed Features
 - User operations ( sign up - sign in - verify - reset password )
