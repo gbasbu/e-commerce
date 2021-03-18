@@ -53,6 +53,59 @@ router.post('/product/add', upload.single('image'), async (req, res) => {
     }
 })
 
+/**
+ * @route GET /products/get
+ * @desc Get products
+ * @access Public
+*/
+router.get('/products/get', async (req, res) => {
+    try {
+        let products = await ProductModel.find()
+        if(!products){
+        return res.status(400).json({
+            success: false,
+                msg: 'Products are not found.'
+            }) 
+        }else{
+            return res.json({
+                products: products
+            })
+        }
+    } catch (err) {
+        return res.status(400).json({
+            success: false,
+            msg: 'Something wrong. Please try again later.'
+        })
+    }
+})
+
+/**
+ * @route GET /product/get/:id
+ * @desc Get product from id
+ * @access Public
+*/
+router.get('/product/get/:id', async (req, res) => {
+    try {
+        let product = await ProductModel.findOne({ _id: req.params.id })
+        if(!product){
+        return res.status(400).json({
+            success: false,
+                msg: 'Product is not found.'
+            }) 
+        }else{
+            return res.json({
+                product: product
+            })
+        }
+    } catch (err) {
+        return res.status(400).json({
+            success: false,
+            msg: 'Something wrong. Please try again later.'
+        })
+    }
+})
+
+
 
 
 module.exports = router

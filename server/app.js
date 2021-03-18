@@ -28,11 +28,13 @@ const userRouter = require("./routes/api/user")
 const addressRouter = require('./routes/api/address')
 const categoryRouter = require('./routes/api/category')
 const productRouter = require('./routes/api/product')
+const commentRouter = require('./routes/api/comment')
 
 app.use("/api/", userRouter)
 app.use('/api/', addressRouter)
 app.use('/api/', categoryRouter)
 app.use('/api/', productRouter)
+app.use('/api/', commentRouter)
 
 
 // ENG: Listening server & TR: Server oluşturma

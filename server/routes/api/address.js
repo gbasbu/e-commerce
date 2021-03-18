@@ -65,7 +65,6 @@ router.get('/address/get', passport.authenticate("jwt", {session: false}), async
                 msg: 'Something wrong. Please try again later.'
             })
         }
-        
     }
 )
 
