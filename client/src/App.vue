@@ -9,7 +9,7 @@ export default {
     Nav
   },
   computed:{
-    ...mapGetters(['userInfo', 'addressInfo', 'productInfo'])
+    ...mapGetters(['userInfo', 'addressInfo', 'productInfo', 'commentInfo'])
   },
 }
 </script>
@@ -20,6 +20,7 @@ export default {
     <Infos v-if="userInfo" :msg="userInfo.msg" :class="[ userInfo.success == false ? 'info-error' : 'info-success' ]" />
     <Infos v-if="addressInfo" :msg="addressInfo.msg" :class="[ addressInfo.success == false ? 'info-error' : 'info-success' ]" />
     <Infos v-if="productInfo" :msg="productInfo.msg" :class="[ productInfo.success == false ? 'info-error' : 'info-success' ]" />
+    <Infos v-if="commentInfo" :msg="commentInfo.msg" :class="[ commentInfo.success == false ? 'info-error' : 'info-success' ]" />
     <router-view/>
   </div>
 </template>
