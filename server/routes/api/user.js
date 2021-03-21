@@ -14,7 +14,7 @@ sgMail.setApiKey(process.env.SENDGRID_API);
  * @desc Register the User
  * @access Public
  */
-router.post("/users/register", async (req, res) => {
+router.post("/register", async (req, res) => {
   let { firstName, lastName, email, password, confirm_password } = req.body;
   let emailToken = Math.floor(Math.random() * (999999 - 100000) + 100000);
   let isVerified = false;
@@ -90,7 +90,7 @@ router.post("/users/register", async (req, res) => {
  * @access Public
  */
 
-router.post("/users/verify-email", async (req, res) => {
+router.post("/verify-email", async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
     if (!user) {
@@ -122,7 +122,7 @@ router.post("/users/verify-email", async (req, res) => {
  * @desc Reset Password mail
  * @access Public
  */
-router.post("/users/reset-request", async (req, res) => {
+router.post("/reset-request", async (req, res) => {
   const user = await UserModel.findOne({ email: req.body.email });
   if (!user) {
     return res.status(400).json({
@@ -172,7 +172,7 @@ router.post("/users/reset-request", async (req, res) => {
  * @desc Reset Password
  * @access Public
  */
-router.post("/users/reset-password", async (req, res) => {
+router.post("/reset-password", async (req, res) => {
   const user = await UserModel.findOne({ resetToken: req.body.resetToken });
   if (!user) {
     return res.status(400).json({
@@ -207,7 +207,7 @@ router.post("/users/reset-password", async (req, res) => {
  * @desc Signing in the User
  * @access Public
  */
-router.post("/users/login", (req, res) => {
+router.post("/login", (req, res) => {
   UserModel.findOne({
     email: req.body.email,
   }).then((user) => {
@@ -246,7 +246,7 @@ router.post("/users/login", (req, res) => {
             });
           }
         );
-      } else {
+      }else {
         return res.status(404).json({
           msg: "Incorrect password.",
           success: false,
@@ -261,7 +261,7 @@ router.post("/users/login", (req, res) => {
  * @desc Return the User's data
  * @access Private
  */
-router.get("/users/profile",passport.authenticate("jwt", {session: false,}),(req, res) => {
+router.get("/profile",passport.authenticate("jwt", {session: false,}),(req, res) => {
     return res.json({
       user: req.user,
     });

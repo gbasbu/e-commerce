@@ -9,6 +9,14 @@ const CommentSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    userName: {
+        type: String,
+        required: true
+    },
+    userLastName: {
+        type: String,
+        required: true
+    },
     comment: {
         type: String,
         required: true
@@ -17,6 +25,14 @@ const CommentSchema = mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    like: {
+        type: Array,
+        default: null
+    },
+    dislike: {
+        type: Array,
+        default: null
+    }
 })
 
 const CommentModel = mongoose.model('Comment', CommentSchema)
