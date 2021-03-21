@@ -25,10 +25,8 @@ export default {
         location: this.location,
         title: this.title
       };
-      this.addAddress(newAddress).then((res) => {
-        if(res.data.success == true){
+      this.addAddress(newAddress).then(() => {
           this.$router.push('/profile');
-        }
       })
     },
   },

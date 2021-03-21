@@ -18,7 +18,6 @@ export default {
   <div id="app">
     <Nav/>
     <Infos v-if="userInfo" :msg="userInfo.msg" :class="[ userInfo.success == false ? 'info-error' : 'info-success' ]" />
-    <Infos v-if="addressInfo" :msg="addressInfo.msg" :class="[ addressInfo.success == false ? 'info-error' : 'info-success' ]" />
     <Infos v-if="productInfo" :msg="productInfo.msg" :class="[ productInfo.success == false ? 'info-error' : 'info-success' ]" />
     <Infos v-if="commentInfo" :msg="commentInfo.msg" :class="[ commentInfo.success == false ? 'info-error' : 'info-success' ]" />
     <router-view/>
@@ -40,6 +39,21 @@ export default {
     }
     @media (min-width:1200px) {
       padding: 0 120px;
+    }
+    .info{
+      position: fixed;
+      right: 0;
+      margin-right: 30px;
+      z-index: 2;
+      @media (min-width:768px) {
+      margin-right: 60px;
+      }
+      @media (min-width:992px) {
+        margin-right: 80px;
+      }
+      @media (min-width:1200px) {
+        margin-right: 120px;
+      }
     }
   }
 </style>

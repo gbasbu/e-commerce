@@ -18,7 +18,7 @@ export const mutations = {
     auth_success(state, data) {
         state.token = data.token
         state.user = data.user
-        state.userInfo = data
+        state.userInfo = data.status
     },
     auth_info(state, err) {
         state.userInfo = err.response.data;

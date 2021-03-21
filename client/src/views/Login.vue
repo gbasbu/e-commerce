@@ -18,8 +18,10 @@ export default {
                 email: this.email,
                 password: this.password
             };
-            this.login(user).then(() => {
-               this.$router.push('/profile');
+            this.login(user).then((res) => {
+              if(res.data.success == true){
+                this.$router.push('/');
+              }
             })
         },
     },

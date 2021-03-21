@@ -4,15 +4,14 @@ import{ mapActions, mapGetters } from 'vuex'
 export default {
     computed: mapGetters(['user', 'addresses']),
     methods: {
-      ...mapActions(['getProfile', 'fetchAddress']),
-      ...mapActions(["logout"]),
+      ...mapActions(['getProfile', 'logout', 'fetchAddresses']),
       logoutUser() {
         this.logout();
       },
     },
-    created() {
-      this.getProfile()
-      this.fetchAddress()
+    mounted() {
+      this.getProfile(),
+      this.fetchAddresses()
     },
 }
 </script>

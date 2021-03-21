@@ -1,28 +1,26 @@
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import ProductCard from '@/components/Product-card'
 // @ is an alias to /src
-
+import { mapActions } from 'vuex'
 export default {
   name: "Home",
   components: {
-    ProductCard
+    
   },
   computed: {
-    ...mapGetters(['products']),
+    
   },
   methods: {
-    ...mapActions(['fetchProducts'])
+    ...mapActions(['fetchAddresses'])
   },
-  created() {
-    this.fetchProducts()
+  mounted() {
+    this.fetchAddresses()
   },
 };
 </script>
 
 <template>
   <div class="home">
-    <ProductCard class="product" v-for="product in products" :key="product.id" :product="product" />
+    
   </div>
 </template>
 

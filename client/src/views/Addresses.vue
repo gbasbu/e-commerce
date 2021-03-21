@@ -1,19 +1,18 @@
 <script>
-import { mapGetters, mapActions } from 'vuex'
 import AddressCard from '@/components/Address-card'
-
+import { mapGetters, mapActions } from 'vuex'
 export default {
   components: { 
       AddressCard 
     },
     computed: {
-        ...mapGetters(['addresses']),
+        ...mapGetters(['addresses'])
     },
     methods: {
-      ...mapActions(['fetchAddress', 'deleteAddress'])
+        ...mapActions(['fetchAddresses'])
     },
-    created() {
-      this.fetchAddress()
+    mounted() {
+      this.fetchAddresses()
     },
 };
 </script>
@@ -25,7 +24,7 @@ export default {
         <h1>Addresses</h1>
         <router-link class="link underline" to="/address-add">New Address</router-link>
       </div>
-      <address-card v-for="address in addresses" :address="address" :key="address.id" ></address-card>
+      <AddressCard v-for="address in addresses" :address="address" :key="address.id" />
   </main>
 </template>
 

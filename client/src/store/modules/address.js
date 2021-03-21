@@ -1,97 +1,57 @@
 import axios from 'axios'
+const api = 'http://localhost:5000/api/address'
 
 export const state = {
     addresses: [],
-    addressInfo: null
 }
 
 export const getters = {
-    addresses: state => state.addresses,
-    addressInfo: state => state.addressInfo,
+    addresses: state => state.addresses
 }
 
 export const mutations = {
-    add_address_success(state, data) {
-        state.addressInfo = data
-        setTimeout(() => state.addressInfo = null, 3000)
-    },
-    add_address_error(state, err) {
-        state.addressInfo = err.response.data;
-        setTimeout(() => state.addressInfo = null, 3000)
-    },
-    fetch_address_success(state,data) {
+    GET_ADDRESSES(state, data) {
         state.addresses = data
     },
-    fetch_address_error(state, err) {
-        state.addressInfo = err.response.data;
-        setTimeout(() => state.addressInfo = null, 3000)
+    ADD_ADDRESS(state, data) {
+        state.addresses.push(data)
     },
-    delete_address_success(state, data){
-        state.addressInfo = data
-        setTimeout(() => state.addressInfo = null, 3000)
+    DELETE_ADDRESS(state, data) {
+    state.addresses.forEach(element => {
+        if(element._id == data._id){
+          state.addresses.splice(state.addresses.indexOf(element),1)
+        }
+      });
     },
-    delete_address_error(state, err){
-        state.addressInfo = err.response.data
-        setTimeout(() => state.addressInfo = null, 3000)
-    },
-    update_address_success(state, data){
-        state.addressInfo = data
-        setTimeout(() => state.addressInfo = null, 3000)
-    },
-    update_address_error(state, err){
-        state.addressInfo = err.response.data
-        setTimeout(() => state.addressInfo = null, 3000)
-    },
-
+    UPDATE_ADDRESS(state, data) {
+    state.addresses.forEach(element => {
+        if(element._id == data._id){
+          element = data
+        }
+      });
+    }
 }
 
 export const actions = {
-    // Add Address Action
-    async addAddress({ commit }, addressData) {
-        try {
-            let res = await axios.post("http://localhost:5000/api/address/add", addressData);
-            if (res.data.success == true) {
-                commit("add_address_success", res.data)
-            }
-            return res
-        } catch (err) {
-            commit('add_address_error', err)
-        }
+    // Fetch Addresses
+    async fetchAddresses({ commit }) {
+        const result = await axios.get(api)
+        commit('GET_ADDRESSES', result.data)
     },
-    // Fetch Addres Action
-    async fetchAddress({ commit }){
-        try {
-            let res = await axios.get('http://localhost:5000/api/address/get')
-            if(res.data.success !== false){
-                commit('fetch_address_success', res.data.address)
-            }
-            return res
-        } catch (err) {
-            commit('fetch_address_error', err)
-        }
+    // Add Address
+    async addAddress({ commit }, data) {
+        const result = await axios.post(`${api}/add`, data)
+        commit('ADD_ADDRESS', result.data)
     },
-    // Delete Address Action
-    async deleteAddress({ commit }, id, addressData){
-        try {
-            let res = await axios.delete(`http://localhost:5000/api/address/delete/${id}`, addressData)
-            if(res.data.success !== false){
-                commit('delete_address_success', res.data)
-            }
-            return res
-        } catch (err) {
-            commit('delete_address_error', err)
-        }
+    // Delete Address
+    async deleteAddress({ commit }, id) {
+        const result = await axios.delete(`${api}/${id}/delete`)
+        commit('DELETE_ADDRESS', result.data)
     },
-    // Update Address Action
-    async updateAddress({ commit },addressData){
-        try {
-            let res = await axios.put(`http://localhost:5000/api/address/update/${addressData.id}`, addressData)
-            if(res.data.success !== false){
-                commit('update_address_success', res.data)
-            }
-            return res
-        } catch (err) {
-            commit('update_address_error', err)
-        }
+    // Update Address
+    async updateAddress({ commit }, data) {
+        const result = await axios.put(`${api}/${data.id}/update`, data)
+        commit('UPDATE_ADDRESS', result.data)
     }
 }
+

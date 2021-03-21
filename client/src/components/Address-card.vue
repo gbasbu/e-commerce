@@ -6,15 +6,21 @@ export default {
     props: ['address'],
     data() {
       return {
-        isClick : false
+        isClick : false,
+        firstName: this.address.firstName,
+        lastName: this.address.lastName,
+        telNo: this.address.telNo,
+        province: this.address.province,
+        county: this.address.county,
+        location: this.address.location,
+        title: this.address.title,
+        id: this.address._id
       }
     },
     methods: {
       ...mapActions(['deleteAddress', 'updateAddress']),
       remove(id){
-          this.deleteAddress(id).then(() => {
-            this.$router.push('/profile');
-          })
+          this.deleteAddress(id)
       },
       changeAddress(){
         let newAddress = {
@@ -27,10 +33,8 @@ export default {
           title: this.address.title,
           id: this.address._id
         }
-        this.updateAddress(newAddress).then((res) => {
-          if(res.data.success == true){
+        this.updateAddress(newAddress).then(() => {
             this.isClick = false
-          }
         })
       }
     },
@@ -39,15 +43,16 @@ export default {
 
 <template>
   <section>
+    <address>
       <h4><strong>{{ address.title }}</strong></h4>
       <p>{{ address.firstName }} {{ address.lastName }}</p>
       <p>{{ address.location }}</p>
       <p>{{ address.county }} / {{ address.province }}</p>
+    </address>
       <div class="buttons">
         <button class="link" @click="isClick = !isClick">Update</button>
         <button class="link" @click="remove(address._id)">Delete</button>
       </div>
-
       <div v-if="isClick" class="update">
         <hr>
         <h2>Update Address</h2>

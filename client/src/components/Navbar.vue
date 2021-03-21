@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   components:{
     
@@ -10,13 +10,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["isLoggedIn",  'categories']),
+    ...mapGetters(["isLoggedIn"]),
   },
   methods: {
-    ...mapActions(['fetchCategories'])
+    
   },
   created() {
-    this.fetchCategories()
+    
   },
 };
 </script>

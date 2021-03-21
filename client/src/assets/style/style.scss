@@ -7,6 +7,9 @@
         color: black;
         cursor: pointer;
     }
+    button{
+        border: none;
+    }
     .underline{
         text-decoration: underline;
     }
@@ -14,11 +17,11 @@
         list-style: none;
     }
     .info-error {
-        color: white;
-        background-color: red;
+        background-color: #ffbaba;
+        border-left: 5px solid #ff0000;
     }
     .info-success {
-        color: white;
-        background-color: green;
+        background-color: #b2ffb2;
+        border-left: 5px solid #00ff00;
     }
 }
