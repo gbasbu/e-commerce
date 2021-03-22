@@ -4,14 +4,15 @@ const passport = require("passport")
 const AddressService = require('../../services/address-service')
 
 // Add Address
-router.post('/add', async (req, res) => {
+router.post('/add', passport.authenticate("jwt", {session: false}), async (req, res) => {
+    req.body.userId = req.user.id
     const address = await AddressService.add(req.body)
     res.send(address)
 })
 
 // Get Addresses
-router.get('/', async (req, res) => {
-    const addresses = await AddressService.findAll()
+router.get('/', passport.authenticate("jwt", {session: false}), async (req, res) => {
+    const addresses = await AddressService.findAll(req.user.id)
     res.send(addresses)
 })
 

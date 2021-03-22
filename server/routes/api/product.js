@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const ProductModel = require("../../models/Product")
+const ProductService = require('../../services/product-service')
 const multer = require('multer')
 
 // Define storage for the images
@@ -23,65 +24,22 @@ const upload = multer({
     }
 })
 
-/**
- * @route POST /product/add
- * @desc Add product
- * @access Private
-*/
+// Add product
 router.post('/add', upload.single('image'), async (req, res) => {
-    const { title, brandName, stock, price } = req.body
-    const img = req.file.filename
-    try {
-        const newProduct = new ProductModel({
-            title,
-            brandName,
-            stock,
-            price,
-            img
-        })
-        await newProduct.save().then(() => {
-            res.send(newProduct)
-        })
-    } catch (err) {
-        return res.status(400).json({
-            success: false,
-            msg: 'Something wrong.Please try again later.'
-        })
-    }
+    req.body.img = req.file.filename
+    await ProductService.add(req.body)
 })
 
-/**
- * @route GET /products/get
- * @desc Get products
- * @access Public
-*/
+// Get products
 router.get('/', async (req, res) => {
-    try {
-        let products = await ProductModel.find()
-        res.send(products)
-    } catch (err) {
-        return res.status(400).json({
-            success: false,
-            msg: 'Something wrong. Please try again later.'
-        })
-    }
+    const products = await ProductService.findAll()
+    res.send(products)
 })
 
-/**
- * @route GET /product/get/:id
- * @desc Get product from id
- * @access Public
-*/
+// Get product from id
 router.get('/:id', async (req, res) => {
-    try {
-        let product = await ProductModel.findOne({ _id: req.params.id })
-        res.send(product)
-    } catch (err) {
-        return res.status(400).json({
-            success: false,
-            msg: 'Something wrong. Please try again later.'
-        })
-    }
+    let product = await ProductService.find(req.params.id)
+    res.send(product)
 })
 
 
