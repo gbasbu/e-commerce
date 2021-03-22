@@ -2,12 +2,10 @@ import axios from 'axios'
 
 export const state = {
     comments: [],
-    commentInfo: null
 }
 
 export const getters = {
     comments: state => state.comments,
-    commentInfo: state => state.commentInfo,
 }
 
 export const mutations = {

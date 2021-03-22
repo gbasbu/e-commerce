@@ -19,10 +19,11 @@ export default {
       newProduct() {
         const fd = new FormData()
         fd.append('image', this.selectedFile, this.selectedFile.name);
-        fd.append('brandName', this.brandName);  
-        fd.append('title', this.title);  
-        fd.append('stock', this.stock);  
-        fd.append('price', this.price);  
+        fd.append('brandName', this.brandName)
+        fd.append('title', this.title)
+        fd.append('stock', this.stock)
+        fd.append('price', this.price)  
+        fd.append('img', '')
         this.addProduct(fd).then((res) => {
             if (res.data.success) {
                 this.$refs.form.reset(); 

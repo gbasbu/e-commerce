@@ -1,26 +1,28 @@
 <script>
-// @ is an alias to /src
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import ProductCard from '@/components/Product-card'
+
 export default {
   name: "Home",
   components: {
-    
+    ProductCard
   },
   computed: {
-    
+    ...mapGetters(['products'])
   },
   methods: {
-    ...mapActions(['fetchAddresses'])
+    ...mapActions(['fetchAddresses', 'fetchProducts'])
   },
   mounted() {
-    this.fetchAddresses()
+    this.fetchAddresses(),
+    this.fetchProducts()
   },
 };
 </script>
 
 <template>
   <div class="home">
-    
+    <ProductCard v-for="product in products" :key="product.id" :product="product" />
   </div>
 </template>
 

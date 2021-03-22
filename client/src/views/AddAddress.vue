@@ -23,7 +23,8 @@ export default {
         province: this.province,
         county: this.county,
         location: this.location,
-        title: this.title
+        title: this.title,
+        userId: ''
       };
       this.addAddress(newAddress).then(() => {
           this.$router.push('/profile');
