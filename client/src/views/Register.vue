@@ -21,6 +21,7 @@ export default {
         email: this.email,
         password: this.password,
         confirm_password: this.confirm_password,
+        emailToken: ''
       };
       this.register(user).then((res) => {
         if (res.data.success) {
