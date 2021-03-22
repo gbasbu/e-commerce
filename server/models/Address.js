@@ -29,8 +29,9 @@ const AdressSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    userID: {
+    userId: {
         type: String,
+        required: true
     },
     date:{
         type: Date,
