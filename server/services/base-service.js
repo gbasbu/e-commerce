@@ -1,7 +1,11 @@
 module.exports = class Service {
     
+    async findAll() {
+      return this.model.find()
+    }
+
     async find(itemId) {
-        return this.model.findById(itemId)
+      return this.model.findById(itemId)
     }
 
     async add(item) {
@@ -9,12 +13,12 @@ module.exports = class Service {
     }
 
     async  del(itemId) {
-        return this.model.deleteOne({ _id: itemId })
-      }
+      return this.model.deleteOne({ _id: itemId })
+    }
   
     async update(itemId, data) {
-        return this.model.findByIdAndUpdate({ _id: itemId }, data )
-      }
+      return this.model.findByIdAndUpdate({ _id: itemId }, data )
+    }
 
   }
   

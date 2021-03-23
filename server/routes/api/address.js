@@ -12,7 +12,7 @@ router.post('/add', passport.authenticate("jwt", {session: false}), async (req, 
 
 // Get Addresses
 router.get('/', passport.authenticate("jwt", {session: false}), async (req, res) => {
-    const addresses = await AddressService.findAll(req.user.id)
+    const addresses = await AddressService.findByUserId(req.user.id)
     res.send(addresses)
 })
 
