@@ -21,16 +21,8 @@ const ProductSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    comments: [{
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: 'User',
-        autopopulate: {
-            maxDepth: 1
-        }
-    }]
+    
 })
-
-ProductSchema.plugin(require('mongoose-autopopulate'))
 
 
 const ProductModel = mongoose.model('Product', ProductSchema)
