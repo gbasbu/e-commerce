@@ -1,29 +1,36 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import CommentCard from '@/components/Comment-card'
 export default {
     name: 'product',
+    components:{
+        CommentCard
+        
+    },
     data() {
         return {
-            isClick : false,
-            comment: "",
-            productID: "",
+            isClick : true,
+            description: "",
+            productId: "",
         }
     },
     computed: {
         ...mapGetters(['product', 'comments']),
+        
     },
     methods: {
-        ...mapActions(['fetchProduct', 'addComment']),
+        ...mapActions(['fetchProduct', 'addComment', 'fetchComments']),
         newComment() {
             let comment = {
-                comment : this.comment,
-                productID: this.product._id
+                description : this.description,
+                productId: this.product._id,
             }
-            this.addComment(comment)
+            this.addComment(comment).then(() => this.fetchComments(this.$route.params.id))
         }
     },
-    created() {
-        this.fetchProduct(this.$route.params.id)
+    mounted() {
+        this.fetchProduct(this.$route.params.id),
+        this.fetchComments(this.$route.params.id)
     },
 }
 </script>
@@ -32,7 +39,7 @@ export default {
     <main>
         <section class="section1">
             <div>
-                <img :src="require(`../../../server/public/images/${product.img}`)">
+                <img v-if="product.img !== undefined" :src="require(`../../../server/public/images/${product.img}`)">
             </div>
             <div>
                 <div>
@@ -51,12 +58,16 @@ export default {
             </div>
         </section>
         <section class="section2" v-if="isClick == true">
-            <h2>Product Comments</h2>
+            <h2>Comments</h2>
             <form @submit.prevent="newComment">
-                <label for="comment">Your Comment</label>
-                <textarea name="comment" id="comment" v-model="comment"></textarea>
-                <input type="submit" value="Add Comment">
+                <textarea name="comment" id="comment" rows="5" v-model="description"></textarea>
+                <input type="submit" value="Add Comment" :disabled="!description">
             </form>
+        </section>
+        <section>
+            <article class="comments" v-for="comment in comments" :key="comment.id">
+                <comment-card :comment="comment" v-if="comment.like !== undefined"></comment-card>
+            </article>
         </section>
     </main>  
 </template>
@@ -65,6 +76,9 @@ export default {
 main{
     min-height: 200vh;
     text-align: center;
+    .comments{
+        margin-bottom: 50px;
+    }
     .section1{
         img{
             height: 400px;
@@ -105,8 +119,7 @@ main{
         }
     }
     .section2{
-        margin-top: 50px;
-        
+        margin: 50px 0;
         form{
             text-align: left;
             margin-top: 30px;
@@ -115,7 +128,24 @@ main{
             }
             textarea{
                 display: block;
-                margin-bottom: 10px ;
+                width: 100%;
+                margin-bottom: 20px;
+                padding: 10px 20px;
+            }
+            input{
+                width: 200px;
+                padding: 10px 0;
+                border: none;
+                border-radius: 20px;
+                background-color: #28a745;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+
+                &:disabled{
+                    opacity: .5;
+                    cursor: default;
+                }
             }
         }
     }
