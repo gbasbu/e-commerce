@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+const api = 'http://localhost:5000/api/comment/'
 export const state = {
     comments: [],
 }
@@ -9,42 +9,41 @@ export const getters = {
 }
 
 export const mutations = {
-    add_comment_success(state, data) {
-        state.commentInfo = data
-        setTimeout(() => state.commentInfo = null, 3000)
+    ADD_COMMENT(state, data) {
+        state.comments.push(data)
     },
-    add_comment_error(state, err) {
-        state.commentInfo = err.response.data;
-        setTimeout(() => state.commentInfo = null, 3000)
-    },
-    fetch_comments_success(state, data) {
+    GET_COMMENTS(state, data) {
         state.comments = data
     },
+    LIKE_COMMENT(state, data) {
+        state.comments = data
+    },
+    DISLIKE_COMMENT(state, data) {
+        state.comments = data
+    }
 }
 
 export const actions = {
     // Add Comment action
     async addComment({ commit }, productData) {
-        try {
-            let res = await axios.post("http://localhost:5000/api/comment/add", productData);
-            if (res.data.success == true) {
-                commit("add_comment_success", res.data)
-            }
-            return res
-        } catch (err) {
-            commit('add_comment_error', err)
-        }
+        let result = await axios.post(`${api}/add`, productData);
+        commit("ADD_COMMENT", result.data)
     },
     // Get Comments action
-    async fetchComments({ commit }) {
-        try {
-            let res = await axios.get('http://localhost:5000/api/comments/get')
-            if(res.data) {
-                commit('fetch_comments_success', res.data.comments)
-            }
-        } catch (err) {
-            console.log('get products err: ', err);
-        }
+    async fetchComments({ commit }, productId) {
+        let result = await axios.get(`${api}/${productId}`)
+        commit('GET_COMMENTS', result.data)
     },
+    // Like Comment action
+    async likeComment({ commit }, commentId) {
+        let result = await axios.post(`${api}/${commentId}/like`)
+        commit('LIKE_COMMENT', result.data)
+        
+    },
+    // Dislike Comment action
+    async dislikeComment({ commit }, commentId) {
+        let result = await axios.post(`${api}/${commentId}/dislike`)
+        commit('DISLIKE_COMMENT', result.data)
+    }
     
 }

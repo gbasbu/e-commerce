@@ -1,15 +1,11 @@
 const mongoose = require('mongoose')
 
 const CommentSchema = mongoose.Schema({
-    userID: {
+    productId: {
         type: String,
         required: true
     },
-    productID: {
-        type: String,
-        required: true
-    },
-    userName: {
+    userFirstName: {
         type: String,
         required: true
     },
@@ -17,7 +13,7 @@ const CommentSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    comment: {
+    description: {
         type: String,
         required: true
     },
@@ -25,15 +21,24 @@ const CommentSchema = mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    like: {
-        type: Array,
-        default: null
-    },
-    dislike: {
-        type: Array,
-        default: null
-    }
+    like: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
+        autopopulate: {
+            maxDepth: 1
+        }
+    }],
+    dislike: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
+        autopopulate: {
+            maxDepth: 1
+        }
+    }]
 })
+
+CommentSchema.plugin(require('mongoose-autopopulate'))
+
 
 const CommentModel = mongoose.model('Comment', CommentSchema)
 
