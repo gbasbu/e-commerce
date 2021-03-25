@@ -49,7 +49,9 @@ export default {
                 </div>
                 <div class="point">
                     <p>puan</p>
-                    <button @click="isClick = !isClick">yorumlar</button>
+                    <button @click="isClick = !isClick" v-if="comments.length == 0">No comment!<br>Do you want to write first comment?</button>
+                    <button @click="isClick = !isClick" v-if="comments.length == 1">View comment.</button>
+                    <button @click="isClick = !isClick" v-if="comments.length > 1">View comments.</button>
                 </div>
             </div>
             
@@ -64,8 +66,8 @@ export default {
                 <input type="submit" value="Add Comment" :disabled="!description">
             </form>
         </section>
-        <section>
-            <article class="comments" v-for="comment in comments" :key="comment.id">
+        <section v-if="isClick == true">
+            <article  class="comments" v-for="comment in comments" :key="comment.id">
                 <comment-card :comment="comment" v-if="comment.like !== undefined"></comment-card>
             </article>
         </section>
@@ -114,8 +116,10 @@ main{
         .point{
             display: flex;
             justify-content: space-between;
-            margin-top: 20px
-            
+            margin-top: 20px;
+            button{
+                font-size: .7rem;
+            }
         }
     }
     .section2{

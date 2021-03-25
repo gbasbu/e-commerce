@@ -25,7 +25,7 @@ export default {
     <div>
         <div class="infos">
             <p>Puan</p>
-            <p>{{ this.date }}</p>
+            <time>{{ this.date }}</time>
             <p>{{ comment.userFirstName }} {{ comment.userLastName }}</p>
         </div>
         <div class="description">
