@@ -15,25 +15,21 @@ const UserModel = require('../models/User')
     async likeComment(user, comment) {
         comment.like.push(user)
         await comment.save()
-        return comment
     }
 
     async deleteLike(comment, index) {
         comment.like.splice(index, 1)
         await comment.save()
-        return comment
     }
 
     async dislikeComment(user, comment) {
         comment.dislike.push(user)
         await comment.save()
-        return comment
     }
 
     async deleteDislike(comment, index) {
         comment.dislike.splice(index, 1)
         await comment.save()
-        return comment
     }
 }
 
