@@ -24,7 +24,34 @@ export default {
 
 
 <style lang="scss">
-  @import './assets/style/style.scss';
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    .link{
+      text-decoration: none;
+      color: black;
+      cursor: pointer;
+    }
+    button{
+      border: none;
+      cursor: pointer;
+      background-color: transparent;
+    }
+    ul{
+      list-style: none;
+    }
+    .info-error{
+      background-color: #ffbaba;
+      border-left:5px solid #ff0000 ;
+      color: white;
+    }
+    .info-success{
+      background-color: #b2ffb2;
+      border-left: 5px solid #00ff00;
+      color: white;
+    }
+  }
   #app{
     padding: 0 30px;
     position: relative;
