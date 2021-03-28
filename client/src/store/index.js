@@ -4,6 +4,7 @@ import * as user from './modules/user'
 import * as address from './modules/address'
 import * as  product from './modules/product'
 import * as  comment from './modules/comment'
+import * as  basket from './modules/basket'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
     user,
     address,
     product,
-    comment
+    comment,
+    basket
   }
 
 })
