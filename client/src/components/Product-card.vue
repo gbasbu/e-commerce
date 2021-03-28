@@ -16,8 +16,8 @@ export default {
 
 <template>
   <article>
-    <router-link :to="productUrl">
-        <img :src="require(`../../../server/public/images/${product.img}`)">
+    <router-link class="link" :to="productUrl">
+        <img :src="require(`../../../server/public/images/${product.img}`)" width="150" height="200">
         <div>
             <h2>{{ product.title }}</h2>
             <h3 class="brandName">{{ product.brandName }}</h3>
@@ -33,16 +33,13 @@ article{
     text-align: center;
     max-width: 50%;
     height: 250px;
-    display: inline-block;
     cursor: pointer;
+    
     h2{
         font-size: 1rem;
     }
     h3{
         font-size: .7rem;
-    }
-    img{
-        height: 250px;
     }
     .brandName{
         opacity: .7;

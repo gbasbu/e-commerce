@@ -8,13 +8,15 @@ export default {
     ProductCard
   },
   computed: {
-    ...mapGetters(['products'])
+    ...mapGetters(['products', 'authState'])
   },
   methods: {
     ...mapActions(['fetchAddresses', 'fetchProducts'])
   },
   mounted() {
-    this.fetchAddresses(),
+    if(this.authState == true){
+      this.fetchAddresses()
+    }
     this.fetchProducts()
   },
 };
@@ -22,7 +24,7 @@ export default {
 
 <template>
   <div class="home">
-    <ProductCard v-for="product in products" :key="product.id" :product="product" />
+    <ProductCard class="product" v-for="product in products" :key="product.id" :product="product" />
   </div>
 </template>
 
@@ -30,5 +32,12 @@ export default {
 <style lang="scss" scoped>
 div{
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .product{
+    margin-bottom: 20px;
+  }
 }
 </style>

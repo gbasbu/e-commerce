@@ -2,7 +2,7 @@
 import{ mapActions, mapGetters } from 'vuex'
 
 export default {
-    computed: mapGetters(['user', 'addresses']),
+    computed: mapGetters(['user', 'addresses', 'authState']),
     methods: {
       ...mapActions(['getProfile', 'logout', 'fetchAddresses']),
       logoutUser() {
@@ -10,8 +10,10 @@ export default {
       },
     },
     mounted() {
-      this.getProfile(),
-      this.fetchAddresses()
+      if(this.authState == true){
+        this.getProfile(),
+        this.fetchAddresses()
+      } 
     },
 }
 </script>

@@ -19,13 +19,16 @@ export default {
         
     },
     methods: {
-        ...mapActions(['fetchProduct', 'addComment', 'fetchComments']),
+        ...mapActions(['fetchProduct', 'addComment', 'fetchComments', 'addItemToBasket', 'totalPrice']),
         newComment() {
             let comment = {
                 description : this.description,
                 productId: this.product._id,
             }
             this.addComment(comment).then(() => this.fetchComments(this.$route.params.id))
+        },
+        addProductAtBasket(id){
+            this.addItemToBasket(id).then(() => this.totalPrice())
         }
     },
     mounted() {
@@ -50,13 +53,13 @@ export default {
                 <div class="point">
                     <p>puan</p>
                     <button @click="isClick = !isClick" v-if="comments.length == 0">No comment!<br>Do you want to write first comment?</button>
-                    <button @click="isClick = !isClick" v-if="comments.length == 1">View comment.</button>
-                    <button @click="isClick = !isClick" v-if="comments.length > 1">View comments.</button>
+                    <button @click="isClick = !isClick" v-if="comments.length == 1">{{ comments.length }} - View comment.</button>
+                    <button @click="isClick = !isClick" v-if="comments.length > 1">{{ comments.length }} - View comments.</button>
                 </div>
             </div>
             
             <div>
-                <input type="button" value="Add Basket">
+                <button class="add" @click="addProductAtBasket(product._id)">Add to Basket</button>
             </div>
         </section>
         <section class="section2" v-if="isClick == true">
@@ -96,7 +99,7 @@ main{
         h3{
             margin-top: 20px;
         }
-        input{
+        .add{
             margin-top: 30px;
             width: 100%;
             background-color: black;
