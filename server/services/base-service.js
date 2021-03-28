@@ -8,6 +8,10 @@ module.exports = class Service {
       return this.model.findById(itemId)
     }
 
+    async findByUserId(userId) {
+      return this.model.find({ userId: userId })
+    }
+
     async add(item) {
       return this.model.create(item)
     }
