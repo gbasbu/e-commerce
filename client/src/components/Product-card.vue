@@ -20,9 +20,9 @@ export default {
 <template>
   <article>
     <router-link class="link" :to="productUrl">
-        <div>
-            <img :src="require(`../../../server/public/images/${product.img}`)">
-        </div>
+        <figure>
+            <img :src="require(`../../../server/public/images/${product.img}`)" alt="Product Image">
+        </figure>
         <div>
             <h2>{{ product.title }}</h2>
             <h3 class="brandName">{{ product.brandName }}</h3>

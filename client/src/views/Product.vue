@@ -41,9 +41,9 @@ export default {
 <template>
     <main>
         <section class="section1">
-            <div>
-                <img v-if="product.img !== undefined" :src="require(`../../../server/public/images/${product.img}`)">
-            </div>
+            <figure>
+                <img v-if="product.img !== undefined" :src="require(`../../../server/public/images/${product.img}`)" alt="Product Image">
+            </figure>
             <div class="product-infos">
                 <div>
                     <h1>{{ product.brandName }}</h1>
