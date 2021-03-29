@@ -2,7 +2,7 @@
 import{ mapActions, mapGetters } from 'vuex'
 
 export default {
-    computed: mapGetters(['user', 'addresses', 'authState']),
+    computed: mapGetters(['user', 'addresses']),
     methods: {
       ...mapActions(['getProfile', 'logout', 'fetchAddresses']),
       logoutUser() {
@@ -10,7 +10,7 @@ export default {
       },
     },
     mounted() {
-      if(this.authState == true){
+      if(this.user !== ''){
         this.getProfile(),
         this.fetchAddresses()
       } 
@@ -60,15 +60,15 @@ export default {
       font-size: 1.2rem;
     }
     .user-details{
-      margin-bottom: 30px;
-      margin-top: 50px;
+      margin: 0 auto;
+      margin-top: 40px;
+      text-align: center;
       h2{
         margin-bottom: 10px;
       }
       .username{
       font-size: 1.2rem;
       font-weight: bold;
-      text-transform: capitalize;
       margin-bottom: 5px;
       }
       p{

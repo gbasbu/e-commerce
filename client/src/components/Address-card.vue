@@ -130,9 +130,8 @@ section{
       padding: 10px 20px;
     }
     input[type="submit"] {
-      display: inline-block;
       margin-right: 10px;
-      width: 48%;
+      width: 100px;
       background-color: black;
       color: white;
       border: none;
@@ -143,16 +142,14 @@ section{
     form{
       button{
         padding: 15px 0;
-        width: 48%;
         background-color: transparent;
         border: 1px solid black;
         border-radius: 30px;
         cursor: pointer;
         font-weight: bold;
-        @media (min-width:768px) {
-          position: absolute;
-          max-width: 100px;
-        }
+        position: absolute;
+        margin-top: -75px;
+        width: 100px;
       }
     }
   }

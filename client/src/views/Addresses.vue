@@ -24,7 +24,9 @@ export default {
         <h1>Addresses</h1>
         <router-link class="link underline" to="/address-add">New Address</router-link>
       </div>
-      <AddressCard v-for="address in addresses" :address="address" :key="address.id" />
+      <div class="addresses">
+        <AddressCard class="address" v-for="address in addresses" :address="address" :key="address.id" />
+      </div>
   </main>
 </template>
 
@@ -34,7 +36,7 @@ main {
   min-height: 100vh;
   .header{
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 70px;
       margin-top: 20px;
       h1{
           margin-bottom: 10px;
@@ -42,6 +44,20 @@ main {
       .link{
           font-size: 1.2rem;
       }
+  }
+  .addresses{
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    text-align: center;
+    margin:0 auto;
+    @media (min-width:768px) {
+      grid-template-columns: 1fr 1fr;
+    }
+    .address{
+      margin:0 auto;
+      margin-bottom: 70px;
+    }
   }
 }
 </style>

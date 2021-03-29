@@ -1,5 +1,5 @@
 <script>
-
+import { mapActions } from 'vuex'
 export default {
     name: 'ProductCard',
     props: ['product'],
@@ -9,7 +9,10 @@ export default {
         }
     },
     methods: {
-      
+      ...mapActions(['addItemToBasket','totalPrice']),
+      addToBasket(id){
+            this.addItemToBasket(id).then(() => this.totalPrice())
+        }
     },
 };
 </script>
@@ -17,13 +20,20 @@ export default {
 <template>
   <article>
     <router-link class="link" :to="productUrl">
-        <img :src="require(`../../../server/public/images/${product.img}`)">
+        <div>
+            <img :src="require(`../../../server/public/images/${product.img}`)">
+        </div>
         <div>
             <h2>{{ product.title }}</h2>
             <h3 class="brandName">{{ product.brandName }}</h3>
             <h3>{{ product.price }} TL</h3>
         </div>
+        <div>
+        </div>
     </router-link>
+    <div>
+        <button @click="addToBasket(product._id)">Add to Basket</button>
+    </div>
   </article>
 </template>
 
@@ -32,22 +42,35 @@ article{
     text-align: center;
     cursor: pointer;
     img{
-        width: 250px;
-        height: 300px;
+        width: 200px;
+        height: 250px;
+        margin-bottom: 20px;
         @media (min-width:500px) {
-            width: 200px;
-            height: 250px;
+            width: 150px;
+            height: 200px;
         }
     }
     h2{
-        font-size: 1rem;
+        font-size: 1.5rem;
     }
     h3{
-        font-size: .7rem;
+        font-size: 1rem;
     }
     .brandName{
         opacity: .7;
         margin-bottom: 10px;
+    }
+    button{
+        width: 100%;
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 15px 0;
+        border-radius: 20px;
+        margin-top: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        text-transform:initial;
     }
 }
 </style>

@@ -8,13 +8,13 @@ export default {
     ProductCard
   },
   computed: {
-    ...mapGetters(['products', 'authState'])
+    ...mapGetters(['products', 'user'])
   },
   methods: {
     ...mapActions(['fetchAddresses', 'fetchProducts'])
   },
   mounted() {
-    if(this.authState == true){
+    if(this.user !== ''){
       this.fetchAddresses()
     }
     this.fetchProducts()
@@ -45,7 +45,12 @@ main{
   }
   .product{
     margin: 0 auto;
-    margin-bottom: 20px;
+    min-height: 100vh;
+    margin-top: 50px;
+    @media (min-width:500px) {
+        min-height: 75vh;
+        margin-top: 80px;
+    }
   }
 }
 </style>

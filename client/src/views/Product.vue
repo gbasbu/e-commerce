@@ -44,20 +44,18 @@ export default {
             <div>
                 <img v-if="product.img !== undefined" :src="require(`../../../server/public/images/${product.img}`)">
             </div>
-            <div>
+            <div class="product-infos">
                 <div>
                     <h1>{{ product.brandName }}</h1>
                     <h2>{{ product.title }}</h2>
                     <h3>{{ product.price }} TL</h3>
                 </div>
                 <div class="point">
-                    <p>puan</p>
-                    <button @click="isClick = !isClick" v-if="comments.length == 0">No comment!<br>Do you want to write first comment?</button>
-                    <button @click="isClick = !isClick" v-if="comments.length == 1">{{ comments.length }} - View comment.</button>
-                    <button @click="isClick = !isClick" v-if="comments.length > 1">{{ comments.length }} - View comments.</button>
+                    <a href="#comment" class="link"  v-if="comments.length == 0">No comment!<br>Do you want to write first comment?</a>
+                    <a href="#comment" class="link"  v-if="comments.length == 1">{{ comments.length }} - View comment.</a>
+                    <a href="#comment" class="link"  v-if="comments.length > 1">{{ comments.length }} - View comments.</a>
                 </div>
             </div>
-            
             <div>
                 <button class="add" @click="addProductAtBasket(product._id)">Add to Basket</button>
             </div>
@@ -89,8 +87,25 @@ main{
         margin-bottom: 50px;
     }
     .section1{
+        margin-top: 20px;
+        @media (min-width:768px) {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin: 45px 0;
+        }
+        .product-infos{
+        @media (min-width:768px) {
+            margin: auto 0;
+         }
+        }
+        a{
+            text-transform:initial;
+        }
         img{
-            height: 400px;
+            height: 250px;
+            @media (min-width:768px) {
+                height: 350px;
+            }
         }
         h1{
             font-size: 1rem;
@@ -101,32 +116,25 @@ main{
             font-weight: bold;
         }
         h3{
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .add{
-            margin-top: 30px;
             width: 100%;
             background-color: black;
             color: white;
             border: none;
             padding: 15px 0;
             border-radius: 20px;
-            margin-top: 30px;
+            margin: 20px 0;
             font-weight: bold;
             cursor: pointer;
-        }
-        button{
-            background-color: none;
-            border: none;
-            cursor: pointer;
+            text-transform:initial;
+            @media (min-width:500px) {
+                margin: 40px 0;
+            }
         }
         .point{
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            button{
-                font-size: .7rem;
-            }
+            margin-top: 15px;
         }
     }
     .section2{

@@ -46,9 +46,9 @@ export default {
           ></router-link>
         </li>
         <li>
-          <button v-if="isLoggedIn == true" class="link" @click="isClick = !isClick"
-            ><i class="fas fa-shopping-basket"></i
-          ></button>
+          <button v-if="isLoggedIn == true" class="link" @click="isClick = !isClick">
+            <i class="fas fa-shopping-basket"></i> <span>{{ basket.length }}</span>
+            </button>
         </li>
       </ul>
     </nav>
@@ -76,6 +76,7 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-transform: capitalize;
     .link{
       text-decoration: none;
       color: black;
@@ -119,7 +120,7 @@ export default {
     }
     nav {
       display: flex;
-      padding: 40px 0;
+      padding: 20px 0;
       justify-content: space-between;
       align-items: center;
       ul {
@@ -130,6 +131,10 @@ export default {
           }
           button{
             margin-left: 30px;
+            span{
+              font-size: 1.5rem;
+              font-weight: bold;
+            }
           }
         }
       }
@@ -137,10 +142,10 @@ export default {
     }
     .basket{
       position: absolute;
-      width: 260px;
+      width: 300px;
       height: 400px;
       right: 30px;
-      top: 80px;
+      top: 60px;
       background-color: white;
       box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, 
           rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, 
@@ -180,7 +185,7 @@ export default {
       .basket-item{
         display: flex;
         img{
-          margin-right: 5px;
+          margin-right: 15px;
         }
         h5{
           font-size: .8rem;
