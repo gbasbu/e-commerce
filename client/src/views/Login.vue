@@ -53,6 +53,12 @@ export default {
 <style lang="scss" scoped>
   main{
     min-height: 100vh;
+    @media (min-width:768px) {
+      max-width: 600px;
+      margin: 0 auto;
+      margin-top: 50px;
+      position: relative;
+    }
     h1{
       margin: 30px 0;
       text-align: center;
@@ -79,6 +85,9 @@ export default {
       border-radius: 20px;
       margin-top: 40px;
       font-weight: bold;
+      @media (min-width:768px) {
+        max-width: 275px;
+      }
     }
     .create{
       display: inline-block;
@@ -90,6 +99,12 @@ export default {
       margin-top: 20px;
       text-align: center;
       font-weight: bold;
+      @media (min-width:768px) {
+        max-width: 275px;
+        position: absolute;
+        right: 0;
+        margin-top: -43px;
+      }
     }
     .forgot{
       display: flex;

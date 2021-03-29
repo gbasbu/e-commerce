@@ -125,9 +125,11 @@ export default {
       ul {
         display: flex;
         li {
-          margin-left: 20px;
           i {
             font-size: 1.5rem;
+          }
+          button{
+            margin-left: 30px;
           }
         }
       }

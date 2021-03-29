@@ -52,7 +52,12 @@ export default {
 
 <style lang="scss" scoped>
 main {
-  min-height: 100vh;
+  max-height: 100vh;
+  @media (min-width:768px) {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 50px;
+  }
   h1 {
     margin: 30px 0;
     text-align: center;
@@ -82,6 +87,9 @@ main {
     border-radius: 20px;
     margin-top: 40px;
     font-weight: bold;
+    @media (min-width:768px) {
+        max-width: 275px;
+    }
   }
   .create {
     display: inline-block;
@@ -93,6 +101,12 @@ main {
     margin-top: 20px;
     text-align: center;
     font-weight: bold;
+    @media (min-width:768px) {
+        max-width: 275px;
+        position: absolute;
+        margin-top: -43px;
+        margin-left: 325px;
+      }
   }
 }
 </style>

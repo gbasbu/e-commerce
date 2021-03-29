@@ -64,6 +64,10 @@ export default {
 <style lang="scss" scoped>
 main {
   min-height: 100vh;
+  @media (min-width:768px) {
+    max-width: 600px;
+    margin: 0 auto;
+  }
   h1 {
     margin: 30px 0;
     text-align: center;

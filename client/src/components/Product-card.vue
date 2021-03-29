@@ -17,7 +17,7 @@ export default {
 <template>
   <article>
     <router-link class="link" :to="productUrl">
-        <img :src="require(`../../../server/public/images/${product.img}`)" width="150" height="200">
+        <img :src="require(`../../../server/public/images/${product.img}`)">
         <div>
             <h2>{{ product.title }}</h2>
             <h3 class="brandName">{{ product.brandName }}</h3>
@@ -29,12 +29,16 @@ export default {
 
 <style lang="scss" scoped>
 article{
-    margin-top: 20px;
     text-align: center;
-    max-width: 50%;
-    height: 250px;
     cursor: pointer;
-    
+    img{
+        width: 250px;
+        height: 300px;
+        @media (min-width:500px) {
+            width: 200px;
+            height: 250px;
+        }
+    }
     h2{
         font-size: 1rem;
     }

@@ -23,20 +23,28 @@ export default {
 </script>
 
 <template>
-  <div class="home">
+  <main class="home">
     <ProductCard class="product" v-for="product in products" :key="product.id" :product="product" />
-  </div>
+  </main>
 </template>
 
 
 <style lang="scss" scoped>
-div{
+main{
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  @media (min-width:500px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (min-width:768px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media (min-width:1000px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
   .product{
+    margin: 0 auto;
     margin-bottom: 20px;
   }
 }

@@ -42,15 +42,19 @@ export default {
 <style lang="scss" scoped>
     div{
         .infos{
+            width:85% ;
+            padding: 0 10px;
             display: flex;
             justify-content: space-between;
-            padding: 10px;
+            @media (min-width:768px) {
+                width: 600px;
+            }
             p{
                 text-transform: capitalize;
             }
         }
         .description{
-            margin-top: 15px;
+            margin-top: 20px;
             text-align: left;
             background-color: #ccc;
             padding: 10px 20px;

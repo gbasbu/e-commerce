@@ -52,6 +52,8 @@ export default {
       margin-top: 20px;
     }
     a{
+      max-width: 55px;
+      margin: 0 auto;
       text-align: center;
       margin-bottom: 50px;
       margin-top: 10px;
@@ -59,6 +61,7 @@ export default {
     }
     .user-details{
       margin-bottom: 30px;
+      margin-top: 50px;
       h2{
         margin-bottom: 10px;
       }

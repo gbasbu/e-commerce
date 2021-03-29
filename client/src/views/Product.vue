@@ -79,8 +79,12 @@ export default {
 
 <style lang="scss" scoped>
 main{
-    min-height: 200vh;
+    min-height: 120vh;
     text-align: center;
+    @media (min-width:768px) {
+        max-width: 600px;
+        margin: 0 auto;
+    }
     .comments{
         margin-bottom: 50px;
     }

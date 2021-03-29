@@ -71,7 +71,7 @@ export default {
           <input type="text" id="location" name="location" v-model="address.location" required/>
           <label for="title">Address Title</label>
           <input type="text" id="title" name="title" v-model="address.title" required/>
-          <input type="submit" class="submit" value="Update Address" />
+          <input type="submit" class="submit" value="Update" />
           <button @click="isClick = !isClick">Cancel</button>
       </form>
       </div>
@@ -82,6 +82,9 @@ export default {
 section{
   margin-bottom: 50px;
   text-transform: capitalize;
+  @media (min-width:768px) {
+    max-width: 200px;
+  }
   h4{
     margin-bottom: 10px;
   }
@@ -146,18 +149,11 @@ section{
         border-radius: 30px;
         cursor: pointer;
         font-weight: bold;
+        @media (min-width:768px) {
+          position: absolute;
+          max-width: 100px;
+        }
       }
-    }
-    .login {
-      display: inline-block;
-      width: 100%;
-      background-color: white;
-      border: 2px solid black;
-      padding: 10px 0;
-      border-radius: 20px;
-      text-align: center;
-      font-weight: bold;
-      margin-top: -10px;
     }
   }
 }

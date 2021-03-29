@@ -13,7 +13,7 @@ export default {
 <style lang="scss" scoped>
     div{
         text-align: center;
-        margin-top: 100px;
+        margin-top: 120px;
         h1{
             font-size: 3rem;
         }
