@@ -48,8 +48,16 @@ main{
     min-height: 100vh;
     margin-top: 50px;
     @media (min-width:500px) {
-        min-height: 75vh;
-        margin-top: 80px;
+      min-height: 80vh;
+      margin-top: 60px;
+    }
+    @media (min-width:768px) {
+      min-height: 80vh;
+      margin-top: 60px;
+    }
+    @media (min-width:1000px) {
+      min-height: 40vh;
+      margin-top: 30px;
     }
   }
 }

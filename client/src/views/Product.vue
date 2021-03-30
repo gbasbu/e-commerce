@@ -102,9 +102,13 @@ main{
             text-transform:initial;
         }
         img{
-            height: 250px;
+            width: 50%;
+            height: auto;
+            @media (min-width:500px){
+                width: 40%;
+            }
             @media (min-width:768px) {
-                height: 350px;
+                width: 85%;
             }
         }
         h1{

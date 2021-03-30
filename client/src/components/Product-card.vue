@@ -41,20 +41,37 @@ export default {
 article{
     text-align: center;
     cursor: pointer;
+    @media (min-width:500px) {
+        width: 80%;
+    }
+    @media (min-width:768px) {
+        width: 70%;
+    }
     img{
-        width: 200px;
-        height: 250px;
+        width: 60%;
+        height: auto;
         margin-bottom: 20px;
         @media (min-width:500px) {
             width: 150px;
-            height: 200px;
+            height: 250px;
+        }
+        @media (min-width:1000px) {
+            width: 50px;
+            height: 100px;
+            margin-bottom: 10px;
         }
     }
     h2{
         font-size: 1.5rem;
+        @media (min-width:1000px) {
+            font-size: 1rem;
+        }
     }
     h3{
         font-size: 1rem;
+        @media (min-width:1000px) {
+            font-size: .7rem;
+        }
     }
     .brandName{
         opacity: .7;
@@ -71,6 +88,9 @@ article{
         font-weight: bold;
         cursor: pointer;
         text-transform:initial;
+        @media (min-width:1000px) {
+            font-size: .5rem;
+        }
     }
 }
 </style>
