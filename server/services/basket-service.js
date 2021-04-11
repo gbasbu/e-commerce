@@ -17,6 +17,10 @@ const BasketModel = require('../models/Basket')
     async deleteByProductId(productId){
         return this.model.deleteOne({ productId: productId })
     }
+
+    async deleteByUserId(userId){
+        return this.model.deleteMany({ userId: userId })
+    }
 }
 
 module.exports = new BasketService()
