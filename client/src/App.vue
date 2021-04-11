@@ -12,22 +12,27 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['isLoggedIn', 'userInfo', 'total']),
-    ...mapGetters(['basket'])
+    ...mapGetters(['isLoggedIn', 'userInfo', 'orderInfo']),
+    ...mapGetters(['basket', 'total', 'user'])
   },
   methods: {
-    ...mapActions(['fetchBasket', 'plusStock', 'minusStock', 'totalPrice']),
+    ...mapActions(['fetchBasket', 'plusStock', 'minusStock', 'totalPrice', 'getProfile']),
     addStock(id){
       this.plusStock(id).then(() => this.totalPrice()) 
     },
     delStock(id){
       this.minusStock(id).then(() => this.totalPrice())
+    },
+    confirmBasket(){
+      this.isClick = false,
+      this.$router.push('/order-confirm')
     }
   },
   mounted() {
     if(this.isLoggedIn == true){
       this.fetchBasket(),
-      this.totalPrice()
+      this.totalPrice(),
+      this.getProfile()
     }
   },
 }
@@ -41,9 +46,14 @@ export default {
       </h1>
       <ul>
         <li>
-          <router-link class="link" to="/profile"
-            ><i class="fas fa-user"></i
-          ></router-link>
+          <router-link class="link" to="/profile">
+            <i class="fas fa-user"></i>
+          </router-link>
+        </li>
+        <li>
+          <router-link class="link" to="/dashboard" v-if="user.isAdmin == true">
+            <i class="fas fa-user-cog"></i>
+          </router-link>
         </li>
         <li>
           <button v-if="isLoggedIn == true" class="link" @click="isClick = !isClick">
@@ -54,18 +64,19 @@ export default {
     </nav>
     <div class="basket" v-if="isClick == true">
       <div class="basket-item" v-for="item in basket" :key="item.id">
-        <div>
+        <figure>
           <img v-if="basket !== undefined" :src="require(`../../server/public/images/${item.productImg}`)" width="70" height="100">
-        </div>
+        </figure>
         <div>
           <h5>{{ item.productTitle }}</h5><br>
           <button @click="delStock(item.productId)">-</button><span>{{ item.stock }}</span><button @click="addStock(item.productId)">+</button>
           <p>{{ item.productPrice * item.stock }} TL</p>
         </div>
       </div>
-      <button :disabled="total == 0" class="submit">Checkout {{ total }} TL</button>
+      <button @click="confirmBasket" class="submit link" :disabled="total == 0">Confirm Cart {{ total }} TL</button>
     </div>
     <Infos class="infos" v-if="userInfo" :msg="userInfo.msg" :class="[ userInfo.success == false ? 'info-error' : 'info-success' ]" />
+    <Infos class="infos" v-if="orderInfo.msg" :msg="orderInfo.msg" :class="[ orderInfo.success == false ? 'info-error' : 'info-success' ]" />
     <router-view/>
   </div>
 </template>
@@ -76,7 +87,6 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    text-transform: capitalize;
     .link{
       text-decoration: none;
       color: black;
@@ -86,19 +96,23 @@ export default {
       border: none;
       cursor: pointer;
       background-color: transparent;
+      &:disabled{
+        opacity: .6;
+        cursor: default;
+      }
     }
     ul{
       list-style: none;
     }
     .info-error{
-      background-color: #ffbaba;
+      background-color: white;
+      border: 1px solid #ff0000;
       border-left:5px solid #ff0000 ;
-      color: white;
     }
     .info-success{
-      background-color: #b2ffb2;
+      background-color:white;
+      border: 1px solid #00ff00;
       border-left: 5px solid #00ff00;
-      color: white;
     }
   }
   #app{
@@ -116,7 +130,11 @@ export default {
     }
     .infos{
       position: absolute;
-      margin-top: -25px;
+      padding: 10px 20px;
+      margin-top: 10px;
+      color: black;
+      font-weight: bold;
+      z-index: 7;
     }
     nav {
       display: flex;
@@ -128,9 +146,15 @@ export default {
         li {
           i {
             font-size: 1.5rem;
+            margin-left: 20px;
+            @media (min-width:768px) {
+              margin-left: 40px;
+            }
           }
           button{
-            margin-left: 30px;
+            i{
+              padding: 0;
+            }
             span{
               font-size: 1.5rem;
               font-weight: bold;
@@ -171,16 +195,17 @@ export default {
       }
       .submit{
         position: absolute;
+        text-align: center;
         bottom: 10px;
         background-color:#28a745;
         color: white;
         font-weight: bold;
         padding: 10px;
         width: 92%;
-        &:disabled{
-          opacity: .5;
-          cursor: default;
-        }
+      }
+      .disabled{
+        opacity: .5;
+        cursor: default;
       }
       .basket-item{
         display: flex;
