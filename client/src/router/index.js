@@ -86,6 +86,16 @@ const routes = [
     component: () => import("../views/Dashboard.vue"),
   },
   {
+    path: '/order-confirm',
+    name: 'OrderConfirm',
+    component: () => import('../views/OrderConfirm.vue')
+  },
+  {
+    path: '/orders',
+    name: 'Orders',
+    component: () => import('../views/Orders.vue')
+  },
+  {
     path: "*",
     name: "404",
     component: () => import("../views/404.vue"),
@@ -111,7 +121,8 @@ router.beforeEach((to, from, next) => {
     } else {
       next();
     }
-  } else {
+  }
+  else {
     next();
   }
 });
