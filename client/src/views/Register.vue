@@ -46,19 +46,9 @@ export default {
         <label for="email">E-mail</label>
         <input type="email" id="email" name="email" v-model="email" required/>
         <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          v-model="password"
-        />
+        <input type="password" id="password" name="password" v-model="password" required/>
         <label for="confirm_password">Confirm Password</label>
-        <input
-          type="password"
-          id="confirm_password"
-          name="confirm_password"
-          v-model="confirm_password"
-        />
+        <input type="password" id="confirm_password" name="confirm_password" v-model="confirm_password" required/>
         <input type="submit" class="submit" value="Register" />
       </form>
     </div>

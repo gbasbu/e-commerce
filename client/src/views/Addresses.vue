@@ -9,10 +9,10 @@ export default {
         ...mapGetters(['addresses'])
     },
     methods: {
-        ...mapActions(['fetchAddresses'])
+        ...mapActions(['fetchAddresses', 'isLoggedIn'])
     },
-    mounted() {
-      this.fetchAddresses()
+    created() {
+        this.fetchAddresses()
     },
 };
 </script>

@@ -27,7 +27,7 @@ export default {
         userId: ''
       };
       this.addAddress(newAddress).then(() => {
-          this.$router.push('/profile');
+          this.$router.push('/addresses')
       })
     },
   },
@@ -39,7 +39,7 @@ export default {
   <main>
     <h1>New Address</h1>
     <div>
-      <form @submit.prevent="newAddress">
+      <form ref="form" @submit.prevent="newAddress">
         <label for="firstName">First Name</label>
         <input type="text" name="firstName" v-model="firstName" required/>
         <label for="lastName">Last Name</label>

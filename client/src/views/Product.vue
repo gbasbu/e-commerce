@@ -15,7 +15,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['product', 'comments']),
+        ...mapGetters(['product', 'comments', 'isLoggedIn']),
         
     },
     methods: {
@@ -57,13 +57,13 @@ export default {
                 </div>
             </div>
             <div>
-                <button class="add" @click="addProductAtBasket(product._id)">Add to Basket</button>
+                <button class="add" @click="addProductAtBasket(product._id)">Add to Cart</button>
             </div>
         </section>
         <section class="section2" v-if="isClick == true">
             <h2>Comments</h2>
             <form @submit.prevent="newComment">
-                <textarea name="comment" id="comment" rows="5" v-model="description"></textarea>
+                <textarea name="comment" id="comment" rows="5" v-model="description" :disabled="!isLoggedIn"></textarea>
                 <input type="submit" value="Add Comment" :disabled="!description">
             </form>
         </section>
@@ -79,6 +79,7 @@ export default {
 main{
     min-height: 120vh;
     text-align: center;
+    text-transform: capitalize;
     @media (min-width:768px) {
         max-width: 600px;
         margin: 0 auto;
@@ -102,7 +103,7 @@ main{
             text-transform:initial;
         }
         img{
-            width: 50%;
+            width: 45%;
             height: auto;
             @media (min-width:500px){
                 width: 40%;
@@ -123,7 +124,7 @@ main{
             margin-top: 10px;
         }
         .add{
-            width: 100%;
+            width: 80%;
             background-color: black;
             color: white;
             border: none;

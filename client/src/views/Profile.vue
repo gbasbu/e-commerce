@@ -2,17 +2,18 @@
 import{ mapActions, mapGetters } from 'vuex'
 
 export default {
-    computed: mapGetters(['user', 'addresses']),
+    computed: mapGetters(['user', 'addresses', 'orders']),
     methods: {
-      ...mapActions(['getProfile', 'logout', 'fetchAddresses']),
+      ...mapActions(['getProfile', 'logout', 'fetchAddresses', 'fetchOrders']),
       logoutUser() {
         this.logout();
       },
     },
-    mounted() {
-      if(this.user !== ''){
+    created() {
+      if(this.user){
         this.getProfile(),
-        this.fetchAddresses()
+        this.fetchAddresses(),
+        this.fetchOrders()
       } 
     },
 }
@@ -21,21 +22,40 @@ export default {
 
 <template>
     <main>
-      <h1>My Account</h1>
-      <a class="underline link" @click.prevent="logoutUser">Logout</a>
-      <div class="user-details">
-        <h2>Account Details</h2>
-        <div v-if="user">
-          <ul>
-            <li>
-              <p class="username">{{ this.user.firstName }} {{ this.user.lastName }} </p>
-            </li>
-            <li>
-              <router-link to="/addresses" class="link">
-                View my addresses ({{ addresses.length }})
-              </router-link>
-            </li>
-          </ul>
+      <div class="header">
+        <h1>My Account</h1>
+        <button class="underline link" @click.prevent="logoutUser">Logout</button>
+      </div>
+      <div class="container">
+        <div class="user-details">
+          <h2>Account Details</h2>
+          <div v-if="user">
+            <ul>
+              <li>
+                <p class="username">{{ this.user.firstName }} {{ this.user.lastName }} </p>
+              </li>
+              <li>
+                <router-link to="/addresses" class="link">
+                  View my addresses ({{ addresses.length }})
+                </router-link>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="orders-details">
+          <h2>Orders Details</h2>
+          <div v-if="orders">
+            <ul>
+              <li>
+                  <p v-if="orders.length == 0">No order has been placed yet</p>
+              </li>
+              <li>
+                <router-link to="/orders" class="link">
+                  View my orders ({{ orders.length }})
+                </router-link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </main>
@@ -43,43 +63,50 @@ export default {
 
 
 <style lang="scss" scoped>
-  main{
+main{
+  h2{
+    margin-bottom: 15px;
+  }
+  .header{
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
-    h1{
-      text-align: center;
-      margin-top: 20px;
+    text-align: center;
+    justify-content: center;
+    margin-top: 30px ;
+    margin-bottom: 70px;
+  }
+  .container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    @media (min-width:768px) {
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: flex-start;
+      margin-top: 150px;
     }
-    a{
-      max-width: 55px;
-      margin: 0 auto;
-      text-align: center;
-      margin-bottom: 50px;
-      margin-top: 10px;
-      font-size: 1.2rem;
+    h2{
+      opacity: .8;
     }
     .user-details{
-      margin: 0 auto;
-      margin-top: 40px;
-      text-align: center;
-      h2{
-        margin-bottom: 10px;
+      margin-top: 50px;
+      @media (min-width:768px) {
+        margin: 0;
       }
       .username{
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin-bottom: 5px;
-      }
-      p{
         font-size: 1.2rem;
-      }
-      .link{
-        border-bottom: 1px solid lightgray;
-        padding-bottom: 5px;
+        font-weight: bold;
+        margin-top: -10px;
+        margin-bottom: 10px;
       }
     }
-    
-    
+    .orders-details{
+      margin-top: 70px;
+      @media (min-width:768px) {
+        margin: 0;
+      }
+    }
   }
+}
 </style>
