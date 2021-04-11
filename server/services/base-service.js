@@ -20,8 +20,8 @@ module.exports = class Service {
       return this.model.deleteOne({ _id: itemId })
     }
   
-    async update(itemId, data) {
-      return this.model.findByIdAndUpdate({ _id: itemId }, data )
+    async update(data) {
+      return this.model.findByIdAndUpdate({ _id: data.id }, data )
     }
 
   }
