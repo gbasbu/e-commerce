@@ -24,11 +24,7 @@ export const mutations = {
       });
     },
     UPDATE_ADDRESS(state, data) {
-    state.addresses.forEach(element => {
-        if(element._id == data._id){
-          element = data
-        }
-      });
+    state.addresses = data
     }
 }
 

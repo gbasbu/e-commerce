@@ -5,6 +5,8 @@ import * as address from './modules/address'
 import * as  product from './modules/product'
 import * as  comment from './modules/comment'
 import * as  basket from './modules/basket'
+import * as  admin from './modules/admin'
+
 
 Vue.use(Vuex)
 
@@ -15,7 +17,8 @@ export default new Vuex.Store({
     address,
     product,
     comment,
-    basket
+    basket,
+    admin
   }
 
 })

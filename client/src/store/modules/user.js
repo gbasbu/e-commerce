@@ -1,17 +1,24 @@
 import axios from "axios";
 import router from '../../router/index';
+const api = 'http://localhost:5000/api/users'
+const adminApi = 'http://localhost:5000/api/admin'
+
 
 export const state = {
     token: localStorage.getItem("token") || "",
+    users: [],
     user: {},
-    userInfo: null
+    userInfo: null,
+    orders: []
 }
 
 export const getters = {
     isLoggedIn: state => !!state.token,
     authState: state => state.status,
+    users: state => state.users,
     user: state => state.user,
     userInfo: state => state.userInfo,
+    orders: state => state.orders
 }
 
 export const mutations = {
@@ -68,13 +75,28 @@ export const mutations = {
     profile_response(state, user) {
         state.user = user;
     },
+    GET_USERS(state, data){
+        state.users = data
+    },
+    BAN_USER(state, data) {
+        state.users = data
+    },
+    UNBAN_USER(state, data) {
+        state.users = data
+    },
+    DELETE_USER(state, data) {
+        state.users = data
+    },
+    GET_ORDERS(state, data){
+        state.orders = data
+    }
 }
 
 export const actions = {
     // Login Action
     async login({ commit }, user) {
         try {
-            let res = await axios.post("http://localhost:5000/api/users/login", user);
+            let res = await axios.post(`${api}/login`, user);
             if (res.data.success) {
                 const token = res.data.token;
                 // Store the token into the localstorge
@@ -91,10 +113,7 @@ export const actions = {
     // Register Action
     async register({ commit }, userData) {
         try {
-            let res = await axios.post(
-                "http://localhost:5000/api/users/register",
-                userData
-            );
+            let res = await axios.post(`${api}/register`, userData);
             if (res.data.success == true) {
                 commit("register_success", res.data);
             }
@@ -106,10 +125,7 @@ export const actions = {
     // Activation Action
     async activate({ commit }, userData) {
         try {
-            let res = await axios.post(
-                "http://localhost:5000/api/users/verify-email",
-                userData
-            );
+            let res = await axios.post(`${api}/verify-email`,userData);
             if (res.data.success == true) {
                 commit("activate_success", res.data);
             }
@@ -121,10 +137,7 @@ export const actions = {
     // Reset Password Mail
     async resetRequest({ commit }, userData) {
         try {
-            let res = await axios.post(
-                "http://localhost:5000/api/users/reset-request",
-                userData
-            );
+            let res = await axios.post(`${api}/reset-request`,userData);
             if (res.data.success == true) {
                 commit("reset_code_success", res.data);
             }
@@ -136,10 +149,7 @@ export const actions = {
     // Reset Password Action
     async resetPassword({ commit }, userData) {
         try {
-            let res = await axios.post(
-                "http://localhost:5000/api/users/reset-password",
-                userData
-            );
+            let res = await axios.post(`${api}/reset-password`, userData);
             if (res.data.success == true) {
                 commit("reset_password_success", res.data);
             }
@@ -150,7 +160,7 @@ export const actions = {
     },
     // Get Profile
     async getProfile({ commit }) {
-        let res = await axios.get("http://localhost:5000/api/users/profile");
+        let res = await axios.get(`${api}/profile`);
         commit("profile_response", res.data.user);
         return res;
     },
@@ -162,4 +172,29 @@ export const actions = {
         router.push("/login");
         return;
     },
+    // Get users
+    async fetchUsers({ commit }){
+        const result = await axios.get(`${adminApi}/users`)
+        commit('GET_USERS', result.data)
+    },
+    // Ban user
+    async banUser({ commit }, userId){
+        const result = await axios.post(`${adminApi}/user/${userId}/ban`)
+        commit('BAN_USER', result.data)
+    },
+    // Unban user
+    async unbanUser({ commit }, userId){
+        const result = await axios.post(`${adminApi}/user/${userId}/unban`)
+        commit('UNBAN_USER', result.data)
+    },
+    // Delete user
+    async deleteUser({ commit }, userId){
+        const result = await axios.delete(`${adminApi}/user/${userId}/delete`)
+        commit('DELETE_USER', result.data)
+    },
+    //Get orders from user id
+    async fetchOrders({ commit }){
+        const result = await axios.get(`${api}/orders`)
+        commit('GET_ORDERS', result.data)
+    }
 }

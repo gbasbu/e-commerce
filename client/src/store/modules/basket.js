@@ -3,12 +3,14 @@ const api = 'http://localhost:5000/api/basket'
 
 export const state = {
     basket: [],
-    total : 0
+    total : 0,
+    orderInfo: {}
 }
 
 export const getters = {
     basket: state => state.basket,
-    total: state => state.total
+    total: state => state.total,
+    orderInfo: state => state.orderInfo
 }
 
 export const mutations = {
@@ -26,6 +28,11 @@ export const mutations = {
     },
     GET_BASKET(state, data) {
         state.basket = data
+    },
+    CONFIRM_BASKET(state, data){
+        state.basket = [],
+        state.orderInfo = data
+        setTimeout(() => state.orderInfo = '', 3000);
     }
 }
 
@@ -54,6 +61,11 @@ export const actions = {
     async fetchBasket({ commit }){
         const result = await axios.get(`${api}/`)
         commit('GET_BASKET', result.data)
+    },
+    // Confirm basket
+    async confirmBasket({ commit }, addressId){
+        const result = await axios.post(`${api}/${addressId}/confirm`)
+        commit('CONFIRM_BASKET', result.data)
     }
 }
 
