@@ -31,6 +31,16 @@ const UserModel = require('../models/User')
         comment.dislike.splice(index, 1)
         await comment.save()
     }
+
+    async banned(user){
+        user.isVerified = false
+        await user.save()
+    }
+
+    async unBanned(user){
+        user.isVerified = true
+        await user.save()
+    }
 }
 
 module.exports = new UserService()
