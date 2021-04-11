@@ -31,7 +31,7 @@ export default {
           county: this.address.county,
           location: this.address.location,
           title: this.address.title,
-          id: this.address._id
+          id: this.address._id,
         }
         this.updateAddress(newAddress).then(() => {
             this.isClick = false

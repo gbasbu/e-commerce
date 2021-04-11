@@ -23,10 +23,9 @@ export default {
 
 <template>
     <div>
-        <div class="infos">
-            <p>Puan</p>
-            <time>{{ this.date }}</time>
+        <div class="comment-infos">
             <p>{{ comment.userFirstName }} {{ comment.userLastName }}</p>
+            <time>{{ this.date }}</time>
         </div>
         <div class="description">
             {{ comment.description }}
@@ -41,11 +40,11 @@ export default {
 
 <style lang="scss" scoped>
     div{
-        .infos{
-            width:85% ;
+        .comment-infos{
+            width:100% ;
             padding: 0 10px;
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 2fr 2fr;
             @media (min-width:768px) {
                 width: 600px;
             }
@@ -54,7 +53,7 @@ export default {
             }
         }
         .description{
-            margin-top: 20px;
+            margin-top: 10px;
             text-align: left;
             background-color: #ccc;
             padding: 10px 20px;
@@ -65,6 +64,7 @@ export default {
             justify-content:space-around;
             align-items: center;
             margin-top: 15px;
+            text-transform: none;
             i{
                 font-size: 1.5rem;
                 color: #cccccc;

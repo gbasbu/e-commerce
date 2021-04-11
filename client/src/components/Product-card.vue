@@ -32,7 +32,7 @@ export default {
         </div>
     </router-link>
     <div>
-        <button @click="addToBasket(product._id)">Add to Basket</button>
+        <button @click="addToBasket(product._id)">Add to Cart</button>
     </div>
   </article>
 </template>
@@ -40,6 +40,7 @@ export default {
 <style lang="scss" scoped>
 article{
     text-align: center;
+    text-transform: capitalize;
     cursor: pointer;
     @media (min-width:500px) {
         width: 80%;
@@ -90,6 +91,8 @@ article{
         text-transform:initial;
         @media (min-width:1000px) {
             font-size: .5rem;
+            padding: 10px 0;
+            width: 70%;
         }
     }
 }
