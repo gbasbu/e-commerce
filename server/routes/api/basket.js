@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 const passport = require("passport")
 const BasketService = require('../../services/basket-service')
+const OrderService = require('../../services/order-service')
 const ProductService = require('../../services/product-service')
-const BasketModel = require('../../models/Basket')
+const UserService = require('../../services/user-service')
 
 
 // Add Basket
@@ -74,5 +75,52 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
     const basket = await BasketService.findByUserId(req.user.id)
     res.send(basket)
 })
+
+// Confirm Basket
+router.post('/:id/confirm', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const user = await UserService.find(req.user.id)
+        const basket = await BasketService.findByUserId(req.user.id)
+        const data = {
+            userId: user.id,
+            userName: user.firstName + ' ' + user.lastName,
+            addressId: req.params.id,
+            products:[],
+            total: 0
+        }
+        basket.forEach(element => {
+            const order = {
+                productId: element.productId,
+                productBrandName: element.productBrandName,
+                productTitle: element.productTitle,
+                productImg: element.productImg,
+                productCount: element.stock,
+                price: element.stock * element.productPrice
+            }
+            data.products.push(order)
+        })
+        data.products.forEach(element => {
+            data.total += element.price
+        })
+        await OrderService.add(data)
+        await BasketService.deleteByUserId(req.user.id)
+        res.json({
+            success: true,
+            msg: 'Your order is preparing'
+        })
+        for(let i=0; i<basket.length; i++){
+            const product = await ProductService.find(basket[i].productId)
+            await BasketService.stockMinus(product)
+        }
+    } catch (err) {
+        res.json({
+            success: false,
+            msg: 'Something went wrong'
+        })
+    }
+})
+
+
+
 
 module.exports = router

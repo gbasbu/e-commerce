@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const UserService = require('../../services/user-service')
+const OrderService = require('../../services/order-service')
 const key = require("../../config/keys").tokenKey;
 const sgMail = require("@sendgrid/mail");
 require('dotenv').config();
@@ -20,11 +21,12 @@ router.post("/register", async (req, res) => {
   }
   const user = await UserService.findByEmail(req.body.email)
   if (user.length == 0) {
+    const emailToken = Math.floor(Math.random() * (999999 - 100000) + 100000);
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(req.body.password, salt, (err, hash) => {
         if (err) throw err;
         req.body.password = hash;
-        req.body.emailToken = Math.floor(Math.random() * (999999 - 100000) + 100000);
+        req.body.emailToken = emailToken
         UserService.add(req.body).then((user) => {
           return res.status(201).json({
             success: true,
@@ -41,14 +43,14 @@ router.post("/register", async (req, res) => {
       Hello, thanks for registering on my project.
       Please copy and paste the address below to verify your account.
       link: http://localhost:8080/activation
-      Code: ${req.body.emailToken}
+      Code: ${emailToken}
       `,
       html: `
       <h2>Hello,</h2>
       <p>Thanks for registering on my project.</p>
       <p>Please copy and paste the address below to verify your account.</p>
       <a href="http://localhost:8080/activation"><strong>Activation Link</strong></a>
-      <p><strong>Activation Code: </strong>${req.body.emailToken}</p>
+      <p><strong>Activation Code: </strong>${emailToken}</p>
       `,
     };
     try {
@@ -74,7 +76,7 @@ router.post("/verify-email", async (req, res) => {
         success: false,
         msg: "User is not found.",
       });
-    } else if (user.emailToken == null) {
+    } else if (user.isVerified == true) {
       return res.status(400).json({
         success: false,
         msg: "Already activated your account.",
@@ -254,5 +256,11 @@ router.get("/profile",passport.authenticate("jwt", {session: false,}),(req, res)
     });
   }
 );
+
+// Get orders from user id
+router.get('/orders', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const orders = await OrderService.findByUserId(req.user.id)
+  res.send(orders.sort(function(a,b){ return new Date(b.date) - new Date(a.date) }))
+})
 
 module.exports = router;

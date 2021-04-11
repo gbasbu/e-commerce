@@ -25,9 +25,9 @@ router.delete('/:id/delete', async (req,res) => {
 
 // Update Address
 router.put('/:id/update', async (req, res) => {
-    await AddressService.update(req.params.id, req.body)
-    const address = await AddressService.find(req.params.id)
-    res.send(address)
+    await AddressService.update(req.body)
+    const addresses = await AddressService.findAll()
+    res.send(addresses)
 })
 
 
