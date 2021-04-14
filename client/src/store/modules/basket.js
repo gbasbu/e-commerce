@@ -1,5 +1,5 @@
 import axios from 'axios'
-const api = 'http://localhost:5000/api/basket'
+const api = `${process.env.VUE_APP_API_URL}/api/basket`
 
 export const state = {
     basket: [],

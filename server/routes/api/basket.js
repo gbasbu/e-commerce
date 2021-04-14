@@ -16,7 +16,7 @@ router.post('/:id/add', passport.authenticate('jwt', { session: false }), async 
         productTitle: product.title,
         productBrandName: product.brandName,
         productPrice: product.price,
-        productImg: product.img,
+        productImg: product.imgURL,
     }
     const userBasket = await BasketService.findByUserId(req.user.id)
     const data = userBasket.find(element => {

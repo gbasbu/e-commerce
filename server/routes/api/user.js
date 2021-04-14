@@ -13,14 +13,14 @@ sgMail.setApiKey(process.env.SENDGRID_API);
 
 // User Register
 router.post("/register", async (req, res) => {
-  if (req.body.password !== req.body.confirm_password) {
-    return res.status(400).json({
-      msg: "Password do not match.",
-      success: false,
-    });
-  }
-  const user = await UserService.findByEmail(req.body.email)
-  if (user.length == 0) {
+  // if (req.body.password !== req.body.confirm_password) {
+  //   return res.status(400).json({
+  //     msg: "Password do not match.",
+  //     success: false,
+  //   });
+  // }
+  // const user = await UserService.findByEmail(req.body.email)
+  // if (user.length == 0) {
     const emailToken = Math.floor(Math.random() * (999999 - 100000) + 100000);
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(req.body.password, salt, (err, hash) => {
@@ -58,12 +58,13 @@ router.post("/register", async (req, res) => {
     } catch (err) {
       console.log(`Mail gönderilemedi: ${err}`);
     }
-  }else {    
-    return res.status(400).json({
-      msg: "Email is already registred. Did you forgot your password?",
-      success: false,
-    })
-  }   
+  // }
+  // else {    
+    // return res.status(400).json({
+    //   msg: "Email is already registred. Did you forgot your password?",
+    //   success: false,
+    // })
+  // }   
 })
 
 

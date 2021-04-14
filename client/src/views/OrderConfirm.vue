@@ -69,7 +69,7 @@ export default {
             <h3 class="title"> Order Detail</h3>
             <div class="product-card" v-for="item in basket" :key="item.id">
                 <figure>
-                    <img v-if="basket !== undefined" :src="require(`../../../server/public/images/${item.productImg}`)" width="50" height="70">
+                    <img v-if="basket !== undefined" :src="`${item.productImg}`" width="50" height="70">
                 </figure>
                 <div>
                     <h4>{{ item.productBrandName }}</h4>

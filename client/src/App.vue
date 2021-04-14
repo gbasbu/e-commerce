@@ -65,7 +65,7 @@ export default {
     <div class="basket" v-if="isClick == true">
       <div class="basket-item" v-for="item in basket" :key="item.id">
         <figure>
-          <img v-if="basket !== undefined" :src="require(`../../server/public/images/${item.productImg}`)" width="70" height="100">
+          <img v-if="basket !== undefined" :src="`${item.productImg}`" width="70" height="100">
         </figure>
         <div>
           <h5>{{ item.productTitle }}</h5><br>
@@ -182,9 +182,11 @@ export default {
         }
         @media (min-width:992px) {
           right: 80px;
+          height: 450px;
         }
         @media (min-width:1200px) {
           right: 120px;
+          height: 500px;
         }
       h4{
         text-align: center;
@@ -209,6 +211,7 @@ export default {
       }
       .basket-item{
         display: flex;
+        margin-bottom: 10px;
         img{
           margin-right: 15px;
         }

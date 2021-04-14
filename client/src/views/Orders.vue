@@ -38,7 +38,7 @@ export default {
                     </div>
                     <div class="products-images">
                         <figure v-for="(item, i) in order.products" :key="i">
-                            <img :src="require(`../../../server/public/images/${item.productImg}`)" width="50" height="70" alt="Product Image">
+                            <img :src="`${item.productImg}`" width="50" height="70" alt="Product Image">
                         </figure>
                     </div>
                     <div class="product-count">

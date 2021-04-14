@@ -1,8 +1,7 @@
 import axios from "axios";
 import router from '../../router/index';
-const api = 'http://localhost:5000/api/users'
-const adminApi = 'http://localhost:5000/api/admin'
-
+const api = `${process.env.VUE_APP_API_URL}/api/user`
+const adminApi = `${process.env.VUE_APP_API_URL}/api/admin`
 
 export const state = {
     token: localStorage.getItem("token") || "",
@@ -22,57 +21,57 @@ export const getters = {
 }
 
 export const mutations = {
-    auth_success(state, data) {
+    AUTH_SUCCESS(state, data) {
         state.token = data.token
         state.user = data.user
         state.status = data.success
     },
-    auth_info(state, err) {
+    AUTH_ERROR(state, err) {
         state.userInfo = err.response.data;
         setTimeout(() => (state.userInfo = null), 3000);
     },
-    register_success(state, data) {
+    REGISTER_SUCCESS(state, data) {
         state.userInfo = data;
         setTimeout(() => (state.userInfo = null), 3000);
     },
-    register_info(state, err) {
+    REGISTER_ERROR(state, err) {
         state.userInfo = err.response.data;
         setTimeout(() => (state.userInfo = null), 3000);
     },
-    activate_success(state, data) {
+    ACTIVATE_SUCCESS(state, data) {
         state.status = data.status;
         state.userInfo = data;
         setTimeout(() => (state.userInfo = null), 3000);
     },
-    activate_info(state, err) {
+    ACTIVATE_ERROR(state, err) {
         state.userInfo = err.response.data;
         setTimeout(() => (state.userInfo = null), 3000);
     },
-    reset_code_success(state, data) {
+    RESET_CODE_SUCCESS(state, data) {
         state.status = data.status;
         state.userInfo = data;
         setTimeout(() => (state.userInfo = null), 3000);
     },
-    reset_password_info(state, err) {
+    RESET_PASSWORD_ERROR(state, err) {
         state.userInfo = err.response.data;
         setTimeout(() => (state.userInfo = null), 3000);
     },
-    reset_password_success(state, data) {
+    RESET_PASSWORD_SUCCESS(state, data) {
         state.status = data.status;
         state.userInfo = data;
         setTimeout(() => (state.userInfo = null), 3000);
     },
-    reset_code_info(state, err) {
+    RESET_CODE_ERROR(state, err) {
         state.userInfo = err.response.data;
         setTimeout(() => (state.userInfo = null), 3000);
     },
-    logout(state) {
+    LOGOUT(state) {
         state.status = "";
         state.token = "";
         state.user = "";
         state.userInfo = null;
     },
-    profile_response(state, user) {
+    PROFILE_RESPONSE(state, user) {
         state.user = user;
     },
     GET_USERS(state, data){
@@ -103,11 +102,11 @@ export const actions = {
                 localStorage.setItem("token", token);
                 // Set the axios defaults
                 axios.defaults.headers.common["Authorization"] = token;
-                commit("auth_success", res.data);
+                commit("AUTH_SUCCESS", res.data);
             }
             return res;
         } catch (err) {
-            commit("auth_info", err);
+            commit("AUTH_ERROR", err);
         }
     },
     // Register Action
@@ -115,11 +114,11 @@ export const actions = {
         try {
             let res = await axios.post(`${api}/register`, userData);
             if (res.data.success == true) {
-                commit("register_success", res.data);
+                commit("REGISTER_SUCCESS", res.data);
             }
             return res;
         } catch (err) {
-            commit("register_info", err);
+            commit("REGISTER_ERROR", err);
         }
     },
     // Activation Action
@@ -127,11 +126,11 @@ export const actions = {
         try {
             let res = await axios.post(`${api}/verify-email`,userData);
             if (res.data.success == true) {
-                commit("activate_success", res.data);
+                commit("ACTIVATE_SUCCESS", res.data);
             }
             return res;
         } catch (err) {
-            commit("activate_info", err);
+            commit("ACTIVATE_ERROR", err);
         }
     },
     // Reset Password Mail
@@ -139,11 +138,11 @@ export const actions = {
         try {
             let res = await axios.post(`${api}/reset-request`,userData);
             if (res.data.success == true) {
-                commit("reset_code_success", res.data);
+                commit("RESET_CODE_SUCCESS", res.data);
             }
             return res;
         } catch (err) {
-            commit("reset_code_info", err);
+            commit("RESET_CODE_ERROR", err);
         }
     },
     // Reset Password Action
@@ -151,23 +150,23 @@ export const actions = {
         try {
             let res = await axios.post(`${api}/reset-password`, userData);
             if (res.data.success == true) {
-                commit("reset_password_success", res.data);
+                commit("RESET_PASSWORD_SUCCESS", res.data);
             }
             return res;
         } catch (err) {
-            commit("reset_password_info", err);
+            commit("RESET_PASSWORD_ERROR", err);
         }
     },
     // Get Profile
     async getProfile({ commit }) {
         let res = await axios.get(`${api}/profile`);
-        commit("profile_response", res.data.user);
+        commit("PROFILE_RESPONSE", res.data.user);
         return res;
     },
     // Logout Action
     async logout({ commit }) {
         await localStorage.removeItem("token");
-        commit("logout");
+        commit("LOGOUT");
         delete axios.defaults.headers.common["Authorization"];
         router.push("/login");
         return;

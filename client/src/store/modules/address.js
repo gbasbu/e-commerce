@@ -1,5 +1,5 @@
 import axios from 'axios'
-const api = 'http://localhost:5000/api/address'
+const api = `${process.env.VUE_APP_API_URL}/api/address`
 
 export const state = {
     addresses: [],

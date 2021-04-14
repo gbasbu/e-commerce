@@ -4,7 +4,7 @@ const passport = require("passport")
 const UserService = require('../../services/user-service')
 const ProductService = require('../../services/product-service')
 const OrderService = require('../../services/order-service')
-
+const cloudinary = require('../../utils/cloudinary')
 
 // Get all users
 router.get('/users', async (req, res) => {
@@ -39,6 +39,8 @@ router.delete('/user/:id/delete', async (req, res) => {
 
 // Delete product
 router.delete('/product/:id/delete', async (req, res) => {
+    const product = await ProductService.find(req.params.id)
+    await cloudinary.uploader.destroy(product.cloudinaryId)
     await ProductService.del(req.params.id)
     const products = await ProductService.findAll()
     res.send(products)

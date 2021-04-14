@@ -42,7 +42,7 @@ export default {
     <main>
         <section class="section1">
             <figure>
-                <img v-if="product.img !== undefined" :src="require(`../../../server/public/images/${product.img}`)" alt="Product Image">
+                <img v-if="product.imgURL !== undefined" :src="`${product.imgURL}`" alt="Product Image">
             </figure>
             <div class="product-infos">
                 <div>

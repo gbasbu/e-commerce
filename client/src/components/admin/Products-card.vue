@@ -47,7 +47,7 @@ export default {
                 <button class="hidden" v-if="isClick == true" @click="isClick = false">-</button>
             </div>
             <figure class="image">
-                <img v-if="product.img" :src="require(`../../../../server/public/images/${product.img}`)" alt="Product Image" width="50" height="70">
+                <img v-if="product.imgURL" :src="`${product.imgURL}`" alt="Product Image" width="50" height="70">
             </figure>
             <div class="title">
                 <p>{{ product.title }}</p>

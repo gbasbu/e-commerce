@@ -1,5 +1,6 @@
 import axios from 'axios'
-const api = 'http://localhost:5000/api/comment/'
+const api = `${process.env.VUE_APP_API_URL}/api/comment`
+
 export const state = {
     comments: [],
 }

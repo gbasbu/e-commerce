@@ -4,7 +4,9 @@ const db = require("./config/keys.js").mongoURI;
 // ENG: Async database connection & TR: Asenkron database bağlantısı
 async function main() {
   await mongoose
-    .connect(db, {
+    .connect(
+      process.env.MONGODB_CONNECTION_STRING || db, 
+    {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useFindAndModify: false,

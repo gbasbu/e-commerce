@@ -31,7 +31,7 @@ const commentRouter = require('./routes/api/comment')
 const basketRouter = require('./routes/api/basket')
 const adminRouter = require('./routes/api/admin')
 
-app.use("/api/users", userRouter)
+app.use("/api/user", userRouter)
 app.use('/api/address', addressRouter)
 app.use('/api/product', productRouter)
 app.use('/api/comment', commentRouter)

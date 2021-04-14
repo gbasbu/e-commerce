@@ -1,5 +1,5 @@
 import axios from 'axios'
-const adminApi = 'http://localhost:5000/api/admin'
+const adminApi = `${process.env.VUE_APP_API_URL}/api/admin`
 
 export const state = {
     allOrders: [],
@@ -29,12 +29,12 @@ export const actions = {
    },
    // Order in cargo action
    async inCargo({ commit }, orderId){
-       const result = await axios.post(`http://localhost:5000/api/admin/order/${orderId}/cargo`)
+       const result = await axios.post(`${adminApi}/order/${orderId}/cargo`)
        commit('ORDER_CARGO', result.data)
    },
    // Order delivered action
    async complete({ commit }, orderId){
-        const result = await axios.post(`http://localhost:5000/api/admin/order/${orderId}/complete`)
+        const result = await axios.post(`${adminApi}/order/${orderId}/complete`)
         commit('ORDER_COMPLETE', result.data)
    }
 }

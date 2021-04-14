@@ -35,8 +35,13 @@ export default {
                 <p class="username">{{ this.user.firstName }} {{ this.user.lastName }} </p>
               </li>
               <li>
-                <router-link to="/addresses" class="link">
+                <router-link to="/addresses" class="link" v-if="addresses.length > 0">
                   View my addresses ({{ addresses.length }})
+                </router-link>
+              </li>
+              <li>
+                <router-link to="/address-add" class="link" v-if="addresses.length == 0">
+                  Create new address
                 </router-link>
               </li>
             </ul>
@@ -50,7 +55,7 @@ export default {
                   <p v-if="orders.length == 0">No order has been placed yet</p>
               </li>
               <li>
-                <router-link to="/orders" class="link">
+                <router-link to="/orders" class="link" v-if="orders.length > 0">
                   View my orders ({{ orders.length }})
                 </router-link>
               </li>

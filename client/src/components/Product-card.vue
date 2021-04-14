@@ -21,7 +21,7 @@ export default {
   <article>
     <router-link class="link" :to="productUrl">
         <figure>
-            <img :src="require(`../../../server/public/images/${product.img}`)" alt="Product Image">
+            <img :src="`${product.imgURL}`" alt="Product Image">
         </figure>
         <div>
             <h2>{{ product.title }}</h2>
@@ -57,8 +57,8 @@ article{
             height: 250px;
         }
         @media (min-width:1000px) {
-            width: 50px;
-            height: 100px;
+            width: 80px;
+            height: 120px;
             margin-bottom: 10px;
         }
     }

@@ -17,11 +17,14 @@ const ProductSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    img: {
+    imgURL: {
         type: String,
         required: true
     },
-    
+    cloudinaryId: {
+        type: String,
+        required: true
+    }
 })
 
 
