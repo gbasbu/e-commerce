@@ -8,7 +8,8 @@
 
 ## Admin account info
 
-> admin@admin.com && 12345
+email: admin@admin.com
+password: 12345
 
 ## Operations
 
