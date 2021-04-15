@@ -6,6 +6,10 @@
 
 > [Live Demo](https://ecommerce-project-frontend.herokuapp.com)
 
+## Admin account info
+
+> admin@admin.com && 12345
+
 ## Operations
 
 - Authentication with JWT
