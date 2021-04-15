@@ -13,14 +13,14 @@ sgMail.setApiKey(process.env.SENDGRID_API);
 
 // User Register
 router.post("/register", async (req, res) => {
-  // if (req.body.password !== req.body.confirm_password) {
-  //   return res.status(400).json({
-  //     msg: "Password do not match.",
-  //     success: false,
-  //   });
-  // }
-  // const user = await UserService.findByEmail(req.body.email)
-  // if (user.length == 0) {
+  if (req.body.password !== req.body.confirm_password) {
+    return res.status(400).json({
+      msg: "Password do not match.",
+      success: false,
+    });
+  }
+  const user = await UserService.findByEmail(req.body.email)
+  if (user.length == 0) {
     const emailToken = Math.floor(Math.random() * (999999 - 100000) + 100000);
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(req.body.password, salt, (err, hash) => {
@@ -42,14 +42,14 @@ router.post("/register", async (req, res) => {
       text: `
       Hello, thanks for registering on my project.
       Please copy and paste the address below to verify your account.
-      link: http://localhost:8080/activation
+      link: https://ecommerce-project-frontend.herokuapp.com/activation
       Code: ${emailToken}
       `,
       html: `
       <h2>Hello,</h2>
       <p>Thanks for registering on my project.</p>
       <p>Please copy and paste the address below to verify your account.</p>
-      <a href="http://localhost:8080/activation"><strong>Activation Link</strong></a>
+      <a href="https://ecommerce-project-frontend.herokuapp.com/activation"><strong>Activation Link</strong></a>
       <p><strong>Activation Code: </strong>${emailToken}</p>
       `,
     };
@@ -58,13 +58,12 @@ router.post("/register", async (req, res) => {
     } catch (err) {
       console.log(`Mail gönderilemedi: ${err}`);
     }
-  // }
-  // else {    
-    // return res.status(400).json({
-    //   msg: "Email is already registred. Did you forgot your password?",
-    //   success: false,
-    // })
-  // }   
+  }else {    
+    return res.status(400).json({
+      msg: "Email is already registred. Did you forgot your password?",
+      success: false,
+    })
+  }   
 })
 
 
@@ -114,27 +113,28 @@ router.post("/reset-request", async (req, res) => {
         success: false,
         msg: "User is not activated. Please check your mail.",
       });
-    }
-    user[0].resetToken = Math.floor(Math.random() * (999999 - 100000) + 100000);
-    user[0].save().then(() => {
+    }else{
+      user[0].resetToken = Math.floor(Math.random() * (999999 - 100000) + 100000);
+      user[0].save().then(() => {
       res.status(201).json({
         success: true,
         msg: "Mail sending.Check your mail and click link.",
+      });
     });
-  });
+  }  
   const msg = {
     from: "g.basbug@hotmail.com",
     to: user[0].email,
     subject: "E-commerce - Reset Password",
     text: `
         Please copy and paste the address below to reset password your account.
-        link: http://localhost:8080/reset-password
+        link: https://ecommerce-project-frontend.herokuapp.com/reset-password
         Reset Code: ${user[0].resetToken}
         `,
     html: `
         <h2>Hello,</h2>
         <>Please copy and paste the address below to reset your account.</>
-        <a href="http://localhost:8080/reset-password"><strong>Reset Password Link</strong></a>
+        <a href="https://ecommerce-project-frontend.herokuapp.com/reset-password"><strong>Reset Password Link</strong></a>
         <p><strong>Reset Code: </strong>${user[0].resetToken}</p>
         `,
   };
