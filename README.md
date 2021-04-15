@@ -80,7 +80,7 @@ docker-compose up
 
 If you don't have Docker Desktop
 
-Install all npm dependecies from server
+Install all npm dependecies from server file
 
 ```console
 cd server && npm install
@@ -97,7 +97,7 @@ Start development server
 npm start
 ```
 
-Install all npm dependecies from client
+Install all npm dependecies from client file
 
 ```console
 cd ./client && npm install
@@ -112,15 +112,15 @@ npm run serve
 
 ### Sign In
 
-![Screenshot](screenshots/sign_in.png)
+![Screenshot](screenshots/sign_in.PNG)
 
 ### Home Page
 
-![Screenshot](screenshots/home.png)
+![Screenshot](screenshots/home.PNG)
 
 ### Specific Product Page
 
-![Screenshot](screenshots/product.png)
+![Screenshot](screenshots/product.PNG)
 
 For more screenshots check out the demo link [Live Demo](https://ecommerce-project-frontend.herokuapp.com)
 
