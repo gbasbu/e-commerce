@@ -9,7 +9,7 @@ export default {
     },
     data() {
         return {
-            isClick : true,
+            isClick : false,
             description: "",
             productId: "",
         }
@@ -51,9 +51,9 @@ export default {
                     <h3>{{ product.price }} TL</h3>
                 </div>
                 <div class="point">
-                    <a href="#comment" class="link"  v-if="comments.length == 0">No comment!<br>Do you want to write first comment?</a>
-                    <a href="#comment" class="link"  v-if="comments.length == 1">{{ comments.length }} - View comment.</a>
-                    <a href="#comment" class="link"  v-if="comments.length > 1">{{ comments.length }} - View comments.</a>
+                    <a href="#comment" class="link" @click="isClick = !isClick"  v-if="comments.length == 0">No comment!<br>Do you want to write first comment?</a>
+                    <a href="#comment" class="link" @click="isClick = !isClick"  v-if="comments.length == 1">{{ comments.length }} - View comment.</a>
+                    <a href="#comment" class="link" @click="isClick = !isClick" v-if="comments.length > 1">{{ comments.length }} - View comments.</a>
                 </div>
             </div>
             <div>
@@ -77,9 +77,10 @@ export default {
 
 <style lang="scss" scoped>
 main{
-    min-height: 120vh;
+    min-height: 100vh;
     text-align: center;
     text-transform: capitalize;
+    overflow: auto;
     @media (min-width:768px) {
         max-width: 600px;
         margin: 0 auto;
@@ -95,6 +96,7 @@ main{
             margin: 45px 0;
         }
         .product-infos{
+            margin-top: 10px;
         @media (min-width:768px) {
             margin: auto 0;
          }
@@ -114,7 +116,7 @@ main{
         }
         h1{
             font-size: 1rem;
-                opacity: .7;
+            opacity: .7;
         }
        h2{
             font-size: 2rem;
