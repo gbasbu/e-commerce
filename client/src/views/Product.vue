@@ -104,7 +104,7 @@ main{
         }
         img{
             width: 45%;
-            height: auto;
+            height: 240px;
             @media (min-width:500px){
                 width: 40%;
             }

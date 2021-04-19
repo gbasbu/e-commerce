@@ -50,7 +50,7 @@ article{
     }
     img{
         width: 60%;
-        height: auto;
+        height: 240px;
         margin-bottom: 20px;
         @media (min-width:500px) {
             width: 150px;
