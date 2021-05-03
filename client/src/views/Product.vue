@@ -112,6 +112,7 @@ main{
             }
             @media (min-width:768px) {
                 width: 85%;
+                height: 400px;
             }
         }
         h1{
