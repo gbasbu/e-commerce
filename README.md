@@ -52,7 +52,7 @@ Though the diagram uses sql data type, this diagram is to show you the various c
 
 ![Screenshot](screenshots/database_model.png)
 
-## Requirement
+## Tech Stack
 
 - MongoDB
 - NodeJS
