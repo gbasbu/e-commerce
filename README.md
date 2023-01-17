@@ -2,10 +2,6 @@
 
 > This app is built with mongodb, nodejs, expressjs and vuejs
 
-## Live demo link
-
-> [Live Demo](https://ecommerce-project-frontend.herokuapp.com)
-
 ## Admin account info
 
 - email: admin@admin.com
