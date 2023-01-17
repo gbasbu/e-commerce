@@ -118,8 +118,6 @@ npm run serve
 
 ![Screenshot](screenshots/product.PNG)
 
-For more screenshots check out the demo link [Live Demo](https://ecommerce-project-frontend.herokuapp.com)
-
 ## License
 
 This project is licensed under the MIT License
