@@ -2,11 +2,6 @@
 
 > This app is built with mongodb, nodejs, expressjs and vuejs
 
-## Admin account info
-
-- email: admin@admin.com
-- password: 12345
-
 ## Operations
 
 - Authentication with JWT
